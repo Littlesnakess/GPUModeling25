@@ -1,0 +1,76 @@
+cpu_op_0,cpu_op_0_id,cpu_op_0_input_dim,cpu_op_1,cpu_op_1_id,cpu_op_1_input_dim,kernel,kernel_id,kernel_overhead(us),kernel_dur(us)
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::cat,522104,"[[], []]","void at::native::(anonymous namespace)::CatArrayBatchedCopy<c10::Half, unsigned int, 1, 128, 1>(c10::Half*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<c10::Half, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",1822274,0,3694.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::div_,522105,"[[906153984], []]","void at::native::vectorized_elementwise_kernel<4, at::native::BUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, at::detail::Array<char*, 2> >(int, at::native::BUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, at::detail::Array<char*, 2>)",1822279,0.6666666666666666,2600.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,nccl:all_reduce,522108,[[906153984]],"ncclKernel_AllReduce_RING_LL_Sum_half(ncclDevComm*, unsigned long, ncclWork*)",1822297,0.6666666666666666,31320.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532639,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822333,0.6666666666666666,80.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532640,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822339,0.6666666666666666,30.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532641,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822345,0.3333333333333333,104.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532642,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822351,0.6666666666666666,105.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532643,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822357,0.6666666666666666,79.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532644,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822363,0.3333333333333333,30.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532645,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822369,0.3333333333333333,104.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532646,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822375,0.6666666666666666,105.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532647,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822381,0.3333333333333333,79.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532648,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822387,0.6666666666666666,30.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532649,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822393,0.6666666666666666,104.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532650,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822399,0.6666666666666666,105.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532651,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822405,0.6666666666666666,81.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532652,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822411,0.3333333333333333,28.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532653,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822417,1.0,108.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532654,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822423,0.3333333333333333,106.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532655,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822429,0.6666666666666666,80.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532656,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822435,0.6666666666666666,30.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532657,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822441,0.3333333333333333,105.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532658,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822447,0.6666666666666666,107.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532659,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822453,0.3333333333333333,79.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532660,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822459,0.6666666666666666,31.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532661,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822465,0.6666666666666666,106.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532662,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822471,0.3333333333333333,106.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532663,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822477,0.6666666666666666,82.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532664,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822483,0.6666666666666666,31.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532665,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822489,0.3333333333333333,103.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532666,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822495,0.6666666666666666,105.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532667,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822501,0.6666666666666666,81.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532668,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822507,0.3333333333333333,29.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532669,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822513,0.6666666666666666,104.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532670,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822519,0.6666666666666666,105.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532671,"[[6144, 4096], [6144, 4096], []]",Memcpy DtoD (Device -> Device),1822525,0.6666666666666666,80.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532672,"[[4096, 2048], [4096, 2048], []]",Memcpy DtoD (Device -> Device),1822531,0.6666666666666666,30.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532673,"[[8192, 4096], [8192, 4096], []]",Memcpy DtoD (Device -> Device),1822537,0.3333333333333333,106.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532674,"[[4096, 8192], [4096, 8192], []]",Memcpy DtoD (Device -> Device),1822543,0.6666666666666666,106.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532675,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822549,0.6666666666666666,4.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532676,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822555,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532677,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822561,1.0,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532678,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822567,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532679,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822573,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532680,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822579,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532681,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822585,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532682,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822591,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532683,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822597,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532684,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822603,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532685,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822609,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532686,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822615,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532687,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822621,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532688,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822627,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532689,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822633,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532690,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822639,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532691,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822645,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532692,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822651,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532693,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822657,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532694,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822663,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532695,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822669,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532696,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822675,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532697,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822681,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532698,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822687,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532699,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822693,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532700,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822699,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532701,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822705,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532702,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822711,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532703,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822717,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532704,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822723,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532705,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822729,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532706,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822735,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532707,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822741,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532708,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822747,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532709,"[[8192], [8192], []]",Memcpy DtoD (Device -> Device),1822753,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,532710,"[[4096], [4096], []]",Memcpy DtoD (Device -> Device),1822759,0.3333333333333333,3.0

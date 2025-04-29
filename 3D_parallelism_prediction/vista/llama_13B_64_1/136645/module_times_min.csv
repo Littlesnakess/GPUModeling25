@@ -1,0 +1,5 @@
+module,function,gpu_runtime(us)
+pp_p2p,deepspeed/runtime/pipe/engine.py(948): _exec_send_activations,"[652.6015625, 669.115234375, 0]"
+encoder_fwd,deepspeed/runtime/activation_checkpointing/checkpointing.py(496): forward,"[9345.382, 9270.118, 9330.8]"
+encoder_bwd,CheckpointFunctionBackward,"[22844.038, 22760.242, 22847.277]"
+update,deepspeed/runtime/pipe/engine.py(312): train_batch,"[6760909.015, 6760884.269, 6762124.913]"

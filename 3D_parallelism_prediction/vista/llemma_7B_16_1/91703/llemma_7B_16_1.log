@@ -1,0 +1,1482 @@
+[2025-01-29 15:30:23,344] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+NeoXArgs.from_ymls() ['/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/configs/targets/vista/llemma_7B_4_2_2.yml', '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/configs/targets/vista/local_setup.yml']
+INFO:root:NeoXArgs.calculate_derived() Total number of GPUs determined to be: 16
+-------------------- arguments --------------------
+  attention_config ................ ['flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash']updated
+  batch_size ...................... 4...........................updated
+  checkpoint_activations .......... True........................updated
+  checkpoint_factor ............... 500.........................updated
+  config_files .................... {'llemma_7B_4_2_2.yml': '{\n  "pipe_parallel_size": 4,\n  "model_parallel_size": 2,\n  "make_vocab_size_divisible_by": 128,\n\n  # model settings\n  "num_layers": 32,\n  "hidden_size": 4096,\n  "num_attention_heads": 32,\n  # NB: These rotary embedding and sequence length parameters\n  # May differ from CodeLlama configs. They match what we used for\n  # Llemma continued pretraining. See https://arxiv.org/abs/2310.10631\n  # For detailed discussion\n  "seq_length": 4096,\n  "max_position_embeddings": 4096,\n  "pos_emb": "rotary",\n  "rotary_pct": 1,\n  "rotary_emb_base": 10000,\n  "no_weight_tying": true,\n  "gpt_j_residual": false,\n  "output_layer_parallelism": "column",\n  "norm": "rmsnorm",\n  "rms_norm_epsilon": 1.0e-5,\n\n  "attention_config": [[["flash"], 32]],\n\n  "scaled_upper_triang_masked_softmax_fusion": true,\n  "bias_gelu_fusion": false,\n  "use_bias_in_norms": false,\n  "use_bias_in_attn_linear": false,\n  # "activation": "swiglu",\n  "mlp_multiple_of": 256,\n\n   "optimizer": {\n     "type": "Adam",\n     "params": {\n       "lr": 0.0001,\n       "betas": [0.9, 0.95],\n       "eps": 1.0e-8\n     }\n   },\n\n   "zero_optimization": {\n    "stage": 1,\n    "allgather_partitions": true,\n    "allgather_bucket_size": 1260000000,\n    "overlap_comm": true,\n    "reduce_scatter": true,\n    "reduce_bucket_size": 1260000000,\n    "contiguous_gradients": true,\n    "cpu_offload": false\n  },\n\n  # trained on 256 gpus\n  "train_micro_batch_size_per_gpu": 4,\n  "gradient_accumulation_steps": 8,\n  "data_impl": "mmap",\n\n  "checkpoint_activations": true,\n  "checkpoint_num_layers": 1,\n  "partition_activations": true,\n  "synchronize_each_layer": true,\n\n  "gradient_clipping": 1.0,\n  "weight_decay": 0.1,\n  "hidden_dropout": 0,\n  "attention_dropout": 0,\n\n  # "precision": "bfloat16",\n  # "fp32_allreduce": true,\n  # "bf16": {\n  #   "enabled": true\n  # },\n  # "data_types": {\n  #   "grad_accum_dtype": "fp32"\n  # },\n\n  # precision settings\n  "fp16": {\n    "fp16": true,\n    "enabled": true,\n    "loss_scale": 0,\n    "loss_scale_window": 1000,\n    "hysteresis": 2,\n    "min_loss_scale": 1\n  },\n\n  "train_iters": 8,\n  "lr_decay_iters": 8,\n  "distributed_backend": "nccl",\n  "lr_decay_style": "cosine",\n  # "decay_lr_to": 0.033,\n  # "warmup_iters": 500,\n  "checkpoint_factor": 500,\n  "eval_interval": 250,\n  "eval_iters": 50,\n\n  "log_interval": 1,\n  "steps_per_print": 1,\n  "wall_clock_breakdown": true,\n\n  # "tokenizer_type": "SPMTokenizer",\n  # "vocab-file": "codellama/tokenizer.model", # use tokenizer.model from Meta CodeLlama download\n\n  # "save": "/path/to/save/llema-replication",\n  # #"load": "", # once run is started, to restart from intermediate ckpt use "load" = "save"\n  # "load": "/path/to/converted/codellama_7b_weights_with_mp2",\n\n  # "finetune": true, # set to false once resuming from intermediate finetuning step\n\n  # profiling settings\n  "profile": True,\n  "profile_step_start": 2,\n  "profile_step_stop": 7,\n\n  # distributed training settings\n  "launcher": "slurm",\n  "deepspeed_slurm": true,\n\n}', 'local_setup.yml': '# Suggested data paths when using GPT-NeoX locally\n{\n  "data_path": "/work/08775/byz2022/vista/data/gpt-neox/data/test_text_document",\n\n  # or for weighted datasets:\n  # "train-data-paths": ["data/enwik8/enwik8_text_document", "data/enwik8/enwik8_text_document"],\n  # "test-data-paths": ["data/enwik8/enwik8_text_document", "data/enwik8/enwik8_text_document"],\n  # "valid-data-paths": ["data/enwik8/enwik8_text_document", "data/enwik8/enwik8_text_document"],\n  # "train-data-weights": [1., 2.],\n  # "test-data-weights": [2., 1.],\n  # "valid-data-weights": [0.5, 0.4],\n\n  # If weight_by_num_documents is True, Builds dataset weights from a multinomial distribution over groups of data according to the number of documents in each group.\n  # WARNING: setting this to True will override any user provided weights\n  # "weight_by_num_documents": false,\n  # "weighted_sampler_alpha": 0.3,\n\n  "vocab_file": "/work/08775/byz2022/vista/data/gpt-neox/data/gpt2-vocab.json",\n  "merge_file": "/work/08775/byz2022/vista/data/gpt-neox/data/gpt2-merges.txt",\n\n  "save": "/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test",\n  "load": "/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2",\n  "checkpoint_validation_with_forward_pass": False,\n\n  # "tensorboard_dir": "tensorboard",\n  # "log_dir": "logs",\n  "use_wandb": False,\n  "wandb_host": "https://api.wandb.ai",\n  "wandb_project": "neox"\n}'}updated
+  data_impl ....................... mmap........................updated
+  data_path ....................... /work/08775/byz2022/vista/data/gpt-neox/data/test_text_documentupdated
+  deepspeed_slurm ................. True........................updated
+  dynamic_loss_scale .............. True........................updated
+  eval_interval ................... 250.........................updated
+  eval_iters ...................... 50..........................updated
+  fp16 ............................ {'fp16': True, 'enabled': True, 'loss_scale': 0, 'loss_scale_window': 1000, 'hysteresis': 2, 'min_loss_scale': 1}updated
+  global_num_gpus ................. 16..........................updated
+  gradient_accumulation_steps ..... 8...........................updated
+  hidden_size ..................... 4096........................updated
+  is_pipe_parallel ................ True........................updated
+  launcher ........................ slurm.......................updated
+  load ............................ /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2updated
+  log_interval .................... 1...........................updated
+  lr .............................. 0.0001......................updated
+  lr_decay_iters .................. 8...........................updated
+  lr_decay_style .................. cosine......................updated
+  max_position_embeddings ......... 4096........................updated
+  merge_file ...................... /work/08775/byz2022/vista/data/gpt-neox/data/gpt2-merges.txtupdated
+  mlp_multiple_of ................. 256.........................updated
+  model_parallel_size ............. 2...........................updated
+  no_weight_tying ................. True........................updated
+  norm ............................ rmsnorm.....................updated
+  num_attention_heads ............. 32..........................updated
+  num_layers ...................... 32..........................updated
+  optimizer ....................... {'type': 'Adam', 'params': {'lr': 0.0001, 'betas': [0.9, 0.95], 'eps': 1e-08}}updated
+  optimizer_type .................. Adam........................updated
+  partition_activations ........... True........................updated
+  pipe_parallel_size .............. 4...........................updated
+  pos_emb ......................... rotary......................updated
+  precision ....................... fp16........................updated
+  profile ......................... True........................updated
+  profile_step_start .............. 2...........................updated
+  profile_step_stop ............... 7...........................updated
+  rms_norm_epsilon ................ 1e-05.......................updated
+  save ............................ /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_testupdated
+  scaled_upper_triang_masked_softmax_fusion  True...............updated
+  seq_length ...................... 4096........................updated
+  sparsity_config ................. {}..........................updated
+  steps_per_print ................. 1...........................updated
+  synchronize_each_layer .......... True........................updated
+  text_gen_type ................... unconditional...............updated
+  train_batch_size ................ 64..........................updated
+  train_iters ..................... 8...........................updated
+  train_micro_batch_size_per_gpu .. 4...........................updated
+  use_bias_in_attn_linear ......... False.......................updated
+  use_bias_in_norms ............... False.......................updated
+  use_wandb ....................... False.......................updated
+  user_script ..................... /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/train_profiling.pyupdated
+  vocab_file ...................... /work/08775/byz2022/vista/data/gpt-neox/data/gpt2-vocab.jsonupdated
+  wall_clock_breakdown ............ True........................updated
+  zero_allgather_bucket_size ...... 1260000000..................updated
+  zero_contiguous_gradients ....... True........................updated
+  zero_optimization ............... {'stage': 1, 'allgather_partitions': True, 'allgather_bucket_size': 1260000000, 'overlap_comm': True, 'reduce_scatter': True, 'reduce_bucket_size': 1260000000, 'contiguous_gradients': True, 'cpu_offload': False}updated
+  zero_reduce_bucket_size ......... 1260000000..................updated
+  zero_reduce_scatter ............. True........................updated
+  zero_stage ...................... 1...........................updated
+  account ......................... None........................default
+  activation ...................... gelu........................default
+  activation_checkpointing ........ None........................default
+  adlr_autoresume ................. False.......................default
+  adlr_autoresume_interval ........ 1000........................default
+  allow_chopped ................... True........................default
+  amp ............................. None........................default
+  apply_query_key_layer_scaling ... False.......................default
+  attention_dropout ............... 0...........................default
+  attention_softmax_in_fp32 ....... False.......................default
+  autotuning ...................... None........................default
+  autotuning_run .................. None........................default
+  base_shapes_file ................ None........................default
+  bf16 ............................ None........................default
+  bias_dropout_fusion ............. False.......................default
+  bias_gelu_fusion ................ False.......................default
+  char_level_ppl .................. False.......................default
+  checkpoint ...................... None........................default
+  checkpoint_in_cpu ............... False.......................default
+  checkpoint_num_layers ........... 1...........................default
+  checkpoint_scale ................ linear......................default
+  checkpoint_validation_with_forward_pass  False................default
+  clip_grad ....................... 1.0.........................default
+  comet_experiment ................ None........................default
+  comet_experiment_name ........... None........................default
+  comet_others .................... None........................default
+  comet_project ................... None........................default
+  comet_tags ...................... None........................default
+  comet_workspace ................. None........................default
+  comment ......................... None........................default
+  comms_logger .................... None........................default
+  communication_data_type ......... None........................default
+  compression_training ............ None........................default
+  contiguous_checkpointing ........ False.......................default
+  coord_check ..................... False.......................default
+  create_moe_param_group .......... True........................default
+  csv_monitor ..................... None........................default
+  curriculum_learning ............. None........................default
+  curriculum_seqlen ............... 0...........................default
+  data_efficiency ................. None........................default
+  data_types ...................... None........................default
+  dataset_impl .................... gpt2........................default
+  deepscale ....................... False.......................default
+  deepscale_config ................ None........................default
+  deepspeed ....................... True........................default
+  deepspeed_activation_checkpointing  True......................default
+  deepspeed_extra_args ............ None........................default
+  deepspeed_mpi ................... False.......................default
+  detect_nvlink_pairs ............. False.......................default
+  dim_att ......................... None........................default
+  distributed_backend ............. nccl........................default
+  do_test ......................... None........................default
+  do_train ........................ None........................default
+  do_valid ........................ None........................default
+  dpo_beta ........................ 0.1.........................default
+  dpo_fp32 ........................ True........................default
+  dpo_reference_free .............. False.......................default
+  dump_state ...................... False.......................default
+  elasticity ...................... None........................default
+  enable_expert_tensor_parallelism  False.......................default
+  eod_mask_loss ................... False.......................default
+  eval_results_prefix ............. ............................default
+  eval_tasks ...................... None........................default
+  exclude ......................... None........................default
+  exit_interval ................... None........................default
+  expansion_factor ................ None........................default
+  expert_interval ................. 2...........................default
+  extra_save_iters ................ None........................default
+  ffn_dim ......................... None........................default
+  finetune ........................ False.......................default
+  flops_profiler .................. None........................default
+  force_multi ..................... False.......................default
+  fp16_lm_cross_entropy ........... False.......................default
+  fp32_allreduce .................. False.......................default
+  git_hash ........................ f5325805....................default
+  gmlp_attn_dim ................... 64..........................default
+  gpt_j_residual .................. False.......................default
+  gpt_j_tied ...................... False.......................default
+  gradient_clipping ............... 1.0.........................default
+  gradient_noise_scale_cpu_offload  False.......................default
+  gradient_noise_scale_n_batches .. 5...........................default
+  gradient_predivide_factor ....... 1.0.........................default
+  head_size ....................... None........................default
+  hidden_dropout .................. 0...........................default
+  hostfile ........................ None........................default
+  hysteresis ...................... 2...........................default
+  include ......................... None........................default
+  init_method ..................... normal......................default
+  init_method_std ................. 0.02........................default
+  intermediate_size ............... None........................default
+  iteration ....................... None........................default
+  keep_last_n_checkpoints ......... None........................default
+  kto_beta ........................ 0.1.........................default
+  kto_desirable_weight ............ 1.0.........................default
+  kto_fp32 ........................ True........................default
+  kto_undesirable_weight .......... 1.0.........................default
+  layernorm_epsilon ............... 1e-05.......................default
+  layernorm_fusion ................ False.......................default
+  lazy_mpu_init ................... False.......................default
+  local_rank ...................... None........................default
+  log_dir ......................... None........................default
+  log_grad_norm ................... False.......................default
+  log_grad_pct_zeros .............. False.......................default
+  log_gradient_noise_scale ........ False.......................default
+  log_optimizer_states ............ False.......................default
+  log_param_norm .................. False.......................default
+  loss_scale ...................... None........................default
+  loss_scale_window ............... 1000.0......................default
+  lr_decay_fraction ............... None........................default
+  make_vocab_size_divisible_by .... 128.........................default
+  mamba_causal_conv_fusion ........ False.......................default
+  mamba_inner_func_fusion ......... False.......................default
+  mamba_selective_fp32_params ..... True........................default
+  mamba_selective_scan_fusion ..... False.......................default
+  mamba_use_bias_in_conv .......... True........................default
+  mamba_use_bias_in_linears ....... False.......................default
+  master_addr ..................... None........................default
+  master_port ..................... 29500.......................default
+  maximum_tokens .................. 64..........................default
+  memory_profiling ................ False.......................default
+  memory_profiling_path ........... None........................default
+  min_lr .......................... 0.0.........................default
+  min_scale ....................... 1.0.........................default
+  mmap_warmup ..................... False.......................default
+  moe_eval_capacity_factor ........ 1.0.........................default
+  moe_expert_parallel_size ........ 1...........................default
+  moe_glu ......................... False.......................default
+  moe_jitter_eps .................. None........................default
+  moe_lbl_in_fp32 ................. False.......................default
+  moe_loss_coeff .................. 0.1.........................default
+  moe_min_capacity ................ 4...........................default
+  moe_num_experts ................. 1...........................default
+  moe_token_dropping .............. False.......................default
+  moe_top_k ....................... 1...........................default
+  moe_train_capacity_factor ....... 1.0.........................default
+  moe_type ........................ megablocks..................default
+  moe_use_residual ................ True........................default
+  mup_attn_temp ................... 1.0.........................default
+  mup_embedding_mult .............. 1.0.........................default
+  mup_init_scale .................. 1.0.........................default
+  mup_output_temp ................. 1.0.........................default
+  mup_rp_embedding_mult ........... 1.0.........................default
+  mup_width_scale ................. 2...........................default
+  neg_test_data_paths ............. None........................default
+  neg_test_label_data_paths ....... None........................default
+  neg_train_data_paths ............ None........................default
+  neg_train_label_data_paths ...... None........................default
+  neg_valid_data_paths ............ None........................default
+  neg_valid_label_data_paths ...... None........................default
+  no_load_optim ................... False.......................default
+  no_load_rng ..................... False.......................default
+  no_save_optim ................... False.......................default
+  no_save_rng ..................... False.......................default
+  no_ssh_check .................... False.......................default
+  num_gpus ........................ None........................default
+  num_kv_heads .................... None........................default
+  num_nodes ....................... -1..........................default
+  num_samples ..................... 1...........................default
+  num_unique_layers ............... None........................default
+  num_workers ..................... 2...........................default
+  onnx_safe ....................... False.......................default
+  opt_pos_emb_offset .............. 0...........................default
+  output_layer_init_method ........ scaled_normal...............default
+  output_layer_parallelism ........ column......................default
+  override_lr_scheduler ........... False.......................default
+  pack_impl ....................... packed......................default
+  padded_vocab_size ............... None........................default
+  param_sharing_style ............. grouped.....................default
+  pipe_partition_method ........... type:transformer|mlp........default
+  pos_test_data_paths ............. None........................default
+  pos_test_label_data_paths ....... None........................default
+  pos_train_data_paths ............ None........................default
+  pos_train_label_data_paths ...... None........................default
+  pos_valid_data_paths ............ None........................default
+  pos_valid_label_data_paths ...... None........................default
+  precompute_model_name ........... None........................default
+  prescale_gradients .............. False.......................default
+  profile_backward ................ False.......................default
+  prompt_end ...................... 
+...........................default
+  rank ............................ None........................default
+  recompute ....................... False.......................default
+  return_logits ................... False.......................default
+  rmsnorm_fusion .................. False.......................default
+  rope_fusion ..................... False.......................default
+  rotary_emb_base ................. 10000.......................default
+  rotary_pct ...................... 1...........................default
+  rotary_save_freqs_buffer ........ False.......................default
+  rpe_max_distance ................ 128.........................default
+  rpe_num_buckets ................. 32..........................default
+  s3_chunk_size ................... 104857600...................default
+  s3_path ......................... None........................default
+  sample_input_file ............... None........................default
+  sample_output_file .............. samples.txt.................default
+  save_base_shapes ................ False.......................default
+  scaled_masked_softmax_fusion .... False.......................default
+  scalenorm_epsilon ............... 1e-08.......................default
+  scheduler ....................... None........................default
+  seed ............................ 1234........................default
+  sequence_parallel ............... False.......................default
+  short_seq_prob .................. 0.1.........................default
+  sliding_window_width ............ None........................default
+  soft_prompt_tuning .............. None........................default
+  sparse_attention ................ None........................default
+  sparse_gradients ................ False.......................default
+  split ........................... 969, 30, 1..................default
+  temperature ..................... 0.0.........................default
+  tensorboard ..................... None........................default
+  tensorboard_dir ................. None........................default
+  test_data_paths ................. None........................default
+  test_data_weights ............... None........................default
+  test_label_data_paths ........... None........................default
+  test_reward_data_paths .......... None........................default
+  tokenizer_type .................. GPT2BPETokenizer............default
+  top_k ........................... 0...........................default
+  top_p ........................... 0.0.........................default
+  train_data_paths ................ None........................default
+  train_data_weights .............. None........................default
+  train_epochs .................... None........................default
+  train_impl ...................... normal......................default
+  train_label_data_paths .......... None........................default
+  train_reward_data_paths ......... None........................default
+  use_bias_in_mlp ................. True........................default
+  use_bnb_optimizer ............... False.......................default
+  use_checkpoint_lr_scheduler ..... False.......................default
+  use_comet ....................... None........................default
+  use_cpu_initialization .......... False.......................default
+  use_flashattn_swiglu ............ False.......................default
+  use_mup ......................... False.......................default
+  use_qk_layernorm ................ False.......................default
+  use_shared_fs ................... True........................default
+  use_tutel ....................... False.......................default
+  valid_data_paths ................ None........................default
+  valid_data_weights .............. None........................default
+  valid_label_data_paths .......... None........................default
+  valid_reward_data_paths ......... None........................default
+  wandb ........................... None........................default
+  wandb_group ..................... None........................default
+  wandb_host ...................... https://api.wandb.ai........default
+  wandb_init_all_ranks ............ False.......................default
+  wandb_project ................... neox........................default
+  wandb_team ...................... None........................default
+  warmup .......................... 0.01........................default
+  weight_by_num_documents ......... False.......................default
+  weight_decay .................... 0.1.........................default
+  weighted_sampler_alpha .......... 1.0.........................default
+  world_size ...................... None........................default
+  z_loss .......................... 0.0.........................default
+---------------- end of arguments ----------------
+NeoXArgs.configure_distributed_args() using world size: 16 and model-parallel size: 2 
+[2025-01-29 15:30:29,116] [INFO] [runner.py:586:main] cmd = srun -n 16 --export=ALL,PYTHONPATH=/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/slurms /work/08775/byz2022/vista/pythonenvs/gptneox/bin/python -u /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/train_profiling.py --deepspeed_config eyJ0cmFpbl9iYXRjaF9zaXplIjogNjQsICJ0cmFpbl9taWNyb19iYXRjaF9zaXplX3Blcl9ncHUiOiA0LCAiZ3JhZGllbnRfYWNjdW11bGF0aW9uX3N0ZXBzIjogOCwgIm9wdGltaXplciI6IHsidHlwZSI6ICJBZGFtIiwgInBhcmFtcyI6IHsibHIiOiAwLjAwMDEsICJiZXRhcyI6IFswLjksIDAuOTVdLCAiZXBzIjogMWUtMDh9fSwgImZwMTYiOiB7ImZwMTYiOiB0cnVlLCAiZW5hYmxlZCI6IHRydWUsICJsb3NzX3NjYWxlIjogMCwgImxvc3Nfc2NhbGVfd2luZG93IjogMTAwMCwgImh5c3RlcmVzaXMiOiAyLCAibWluX2xvc3Nfc2NhbGUiOiAxfSwgInplcm9fb3B0aW1pemF0aW9uIjogeyJzdGFnZSI6IDEsICJhbGxnYXRoZXJfcGFydGl0aW9ucyI6IHRydWUsICJhbGxnYXRoZXJfYnVja2V0X3NpemUiOiAxMjYwMDAwMDAwLCAib3ZlcmxhcF9jb21tIjogdHJ1ZSwgInJlZHVjZV9zY2F0dGVyIjogdHJ1ZSwgInJlZHVjZV9idWNrZXRfc2l6ZSI6IDEyNjAwMDAwMDAsICJjb250aWd1b3VzX2dyYWRpZW50cyI6IHRydWUsICJjcHVfb2ZmbG9hZCI6IGZhbHNlfSwgInN0ZXBzX3Blcl9wcmludCI6IDEsICJ3YWxsX2Nsb2NrX2JyZWFrZG93biI6IHRydWV9 --megatron_config eyJsYXVuY2hlciI6ICJzbHVybSIsICJ0cmFpbl9iYXRjaF9zaXplIjogNjQsICJ0cmFpbl9taWNyb19iYXRjaF9zaXplX3Blcl9ncHUiOiA0LCAiZ3JhZGllbnRfYWNjdW11bGF0aW9uX3N0ZXBzIjogOCwgIm9wdGltaXplciI6IHsidHlwZSI6ICJBZGFtIiwgInBhcmFtcyI6IHsibHIiOiAwLjAwMDEsICJiZXRhcyI6IFswLjksIDAuOTVdLCAiZXBzIjogMWUtMDh9fSwgImZwMTYiOiB7ImZwMTYiOiB0cnVlLCAiZW5hYmxlZCI6IHRydWUsICJsb3NzX3NjYWxlIjogMCwgImxvc3Nfc2NhbGVfd2luZG93IjogMTAwMCwgImh5c3RlcmVzaXMiOiAyLCAibWluX2xvc3Nfc2NhbGUiOiAxfSwgInplcm9fb3B0aW1pemF0aW9uIjogeyJzdGFnZSI6IDEsICJhbGxnYXRoZXJfcGFydGl0aW9ucyI6IHRydWUsICJhbGxnYXRoZXJfYnVja2V0X3NpemUiOiAxMjYwMDAwMDAwLCAib3ZlcmxhcF9jb21tIjogdHJ1ZSwgInJlZHVjZV9zY2F0dGVyIjogdHJ1ZSwgInJlZHVjZV9idWNrZXRfc2l6ZSI6IDEyNjAwMDAwMDAsICJjb250aWd1b3VzX2dyYWRpZW50cyI6IHRydWUsICJjcHVfb2ZmbG9hZCI6IGZhbHNlfSwgInN0ZXBzX3Blcl9wcmludCI6IDEsICJ3YWxsX2Nsb2NrX2JyZWFrZG93biI6IHRydWUsICJwcmVjaXNpb24iOiAiZnAxNiIsICJudW1fbGF5ZXJzIjogMzIsICJoaWRkZW5fc2l6ZSI6IDQwOTYsICJtbHBfbXVsdGlwbGVfb2YiOiAyNTYsICJudW1fYXR0ZW50aW9uX2hlYWRzIjogMzIsICJzZXFfbGVuZ3RoIjogNDA5NiwgIm1heF9wb3NpdGlvbl9lbWJlZGRpbmdzIjogNDA5NiwgIm5vcm0iOiAicm1zbm9ybSIsICJybXNfbm9ybV9lcHNpbG9uIjogMWUtMDUsICJwb3NfZW1iIjogInJvdGFyeSIsICJub193ZWlnaHRfdHlpbmciOiB0cnVlLCAiYXR0ZW50aW9uX2NvbmZpZyI6IFsiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giXSwgInNwYXJzaXR5X2NvbmZpZyI6IHt9LCAic2NhbGVkX3VwcGVyX3RyaWFuZ19tYXNrZWRfc29mdG1heF9mdXNpb24iOiB0cnVlLCAidXNlX2JpYXNfaW5fbm9ybXMiOiBmYWxzZSwgInVzZV9iaWFzX2luX2F0dG5fbGluZWFyIjogZmFsc2UsICJscl9kZWNheV9zdHlsZSI6ICJjb3NpbmUiLCAibHJfZGVjYXlfaXRlcnMiOiA4LCAib3B0aW1pemVyX3R5cGUiOiAiQWRhbSIsICJ6ZXJvX3N0YWdlIjogMSwgInplcm9fcmVkdWNlX3NjYXR0ZXIiOiB0cnVlLCAiemVyb19jb250aWd1b3VzX2dyYWRpZW50cyI6IHRydWUsICJ6ZXJvX3JlZHVjZV9idWNrZXRfc2l6ZSI6IDEyNjAwMDAwMDAsICJ6ZXJvX2FsbGdhdGhlcl9idWNrZXRfc2l6ZSI6IDEyNjAwMDAwMDAsICJsciI6IDAuMDAwMSwgImRhdGFfcGF0aCI6ICIvd29yay8wODc3NS9ieXoyMDIyL3Zpc3RhL2RhdGEvZ3B0LW5lb3gvZGF0YS90ZXN0X3RleHRfZG9jdW1lbnQiLCAiZGF0YV9pbXBsIjogIm1tYXAiLCAic2F2ZSI6ICIvd29yay8wODc3NS9ieXoyMDIyL3Zpc3RhL2dwdC1uZW94XzIwMjQxMjEwL2dwdC1uZW94L2NoZWNrcG9pbnRzX3Rlc3QiLCAiY29uZmlnX2ZpbGVzIjogeyJsbGVtbWFfN0JfNF8yXzIueW1sIjogIntcbiAgXCJwaXBlX3BhcmFsbGVsX3NpemVcIjogNCxcbiAgXCJtb2RlbF9wYXJhbGxlbF9zaXplXCI6IDIsXG4gIFwibWFrZV92b2NhYl9zaXplX2RpdmlzaWJsZV9ieVwiOiAxMjgsXG5cbiAgIyBtb2RlbCBzZXR0aW5nc1xuICBcIm51bV9sYXllcnNcIjogMzIsXG4gIFwiaGlkZGVuX3NpemVcIjogNDA5NixcbiAgXCJudW1fYXR0ZW50aW9uX2hlYWRzXCI6IDMyLFxuICAjIE5COiBUaGVzZSByb3RhcnkgZW1iZWRkaW5nIGFuZCBzZXF1ZW5jZSBsZW5ndGggcGFyYW1ldGVyc1xuICAjIE1heSBkaWZmZXIgZnJvbSBDb2RlTGxhbWEgY29uZmlncy4gVGhleSBtYXRjaCB3aGF0IHdlIHVzZWQgZm9yXG4gICMgTGxlbW1hIGNvbnRpbnVlZCBwcmV0cmFpbmluZy4gU2VlIGh0dHBzOi8vYXJ4aXYub3JnL2Ficy8yMzEwLjEwNjMxXG4gICMgRm9yIGRldGFpbGVkIGRpc2N1c3Npb25cbiAgXCJzZXFfbGVuZ3RoXCI6IDQwOTYsXG4gIFwibWF4X3Bvc2l0aW9uX2VtYmVkZGluZ3NcIjogNDA5NixcbiAgXCJwb3NfZW1iXCI6IFwicm90YXJ5XCIsXG4gIFwicm90YXJ5X3BjdFwiOiAxLFxuICBcInJvdGFyeV9lbWJfYmFzZVwiOiAxMDAwMCxcbiAgXCJub193ZWlnaHRfdHlpbmdcIjogdHJ1ZSxcbiAgXCJncHRfal9yZXNpZHVhbFwiOiBmYWxzZSxcbiAgXCJvdXRwdXRfbGF5ZXJfcGFyYWxsZWxpc21cIjogXCJjb2x1bW5cIixcbiAgXCJub3JtXCI6IFwicm1zbm9ybVwiLFxuICBcInJtc19ub3JtX2Vwc2lsb25cIjogMS4wZS01LFxuXG4gIFwiYXR0ZW50aW9uX2NvbmZpZ1wiOiBbW1tcImZsYXNoXCJdLCAzMl1dLFxuXG4gIFwic2NhbGVkX3VwcGVyX3RyaWFuZ19tYXNrZWRfc29mdG1heF9mdXNpb25cIjogdHJ1ZSxcbiAgXCJiaWFzX2dlbHVfZnVzaW9uXCI6IGZhbHNlLFxuICBcInVzZV9iaWFzX2luX25vcm1zXCI6IGZhbHNlLFxuICBcInVzZV9iaWFzX2luX2F0dG5fbGluZWFyXCI6IGZhbHNlLFxuICAjIFwiYWN0aXZhdGlvblwiOiBcInN3aWdsdVwiLFxuICBcIm1scF9tdWx0aXBsZV9vZlwiOiAyNTYsXG5cbiAgIFwib3B0aW1pemVyXCI6IHtcbiAgICAgXCJ0eXBlXCI6IFwiQWRhbVwiLFxuICAgICBcInBhcmFtc1wiOiB7XG4gICAgICAgXCJsclwiOiAwLjAwMDEsXG4gICAgICAgXCJiZXRhc1wiOiBbMC45LCAwLjk1XSxcbiAgICAgICBcImVwc1wiOiAxLjBlLThcbiAgICAgfVxuICAgfSxcblxuICAgXCJ6ZXJvX29wdGltaXphdGlvblwiOiB7XG4gICAgXCJzdGFnZVwiOiAxLFxuICAgIFwiYWxsZ2F0aGVyX3BhcnRpdGlvbnNcIjogdHJ1ZSxcbiAgICBcImFsbGdhdGhlcl9idWNrZXRfc2l6ZVwiOiAxMjYwMDAwMDAwLFxuICAgIFwib3ZlcmxhcF9jb21tXCI6IHRydWUsXG4gICAgXCJyZWR1Y2Vfc2NhdHRlclwiOiB0cnVlLFxuICAgIFwicmVkdWNlX2J1Y2tldF9zaXplXCI6IDEyNjAwMDAwMDAsXG4gICAgXCJjb250aWd1b3VzX2dyYWRpZW50c1wiOiB0cnVlLFxuICAgIFwiY3B1X29mZmxvYWRcIjogZmFsc2VcbiAgfSxcblxuICAjIHRyYWluZWQgb24gMjU2IGdwdXNcbiAgXCJ0cmFpbl9taWNyb19iYXRjaF9zaXplX3Blcl9ncHVcIjogNCxcbiAgXCJncmFkaWVudF9hY2N1bXVsYXRpb25fc3RlcHNcIjogOCxcbiAgXCJkYXRhX2ltcGxcIjogXCJtbWFwXCIsXG5cbiAgXCJjaGVja3BvaW50X2FjdGl2YXRpb25zXCI6IHRydWUsXG4gIFwiY2hlY2twb2ludF9udW1fbGF5ZXJzXCI6IDEsXG4gIFwicGFydGl0aW9uX2FjdGl2YXRpb25zXCI6IHRydWUsXG4gIFwic3luY2hyb25pemVfZWFjaF9sYXllclwiOiB0cnVlLFxuXG4gIFwiZ3JhZGllbnRfY2xpcHBpbmdcIjogMS4wLFxuICBcIndlaWdodF9kZWNheVwiOiAwLjEsXG4gIFwiaGlkZGVuX2Ryb3BvdXRcIjogMCxcbiAgXCJhdHRlbnRpb25fZHJvcG91dFwiOiAwLFxuXG4gICMgXCJwcmVjaXNpb25cIjogXCJiZmxvYXQxNlwiLFxuICAjIFwiZnAzMl9hbGxyZWR1Y2VcIjogdHJ1ZSxcbiAgIyBcImJmMTZcIjoge1xuICAjICAgXCJlbmFibGVkXCI6IHRydWVcbiAgIyB9LFxuICAjIFwiZGF0YV90eXBlc1wiOiB7XG4gICMgICBcImdyYWRfYWNjdW1fZHR5cGVcIjogXCJmcDMyXCJcbiAgIyB9LFxuXG4gICMgcHJlY2lzaW9uIHNldHRpbmdzXG4gIFwiZnAxNlwiOiB7XG4gICAgXCJmcDE2XCI6IHRydWUsXG4gICAgXCJlbmFibGVkXCI6IHRydWUsXG4gICAgXCJsb3NzX3NjYWxlXCI6IDAsXG4gICAgXCJsb3NzX3NjYWxlX3dpbmRvd1wiOiAxMDAwLFxuICAgIFwiaHlzdGVyZXNpc1wiOiAyLFxuICAgIFwibWluX2xvc3Nfc2NhbGVcIjogMVxuICB9LFxuXG4gIFwidHJhaW5faXRlcnNcIjogOCxcbiAgXCJscl9kZWNheV9pdGVyc1wiOiA4LFxuICBcImRpc3RyaWJ1dGVkX2JhY2tlbmRcIjogXCJuY2NsXCIsXG4gIFwibHJfZGVjYXlfc3R5bGVcIjogXCJjb3NpbmVcIixcbiAgIyBcImRlY2F5X2xyX3RvXCI6IDAuMDMzLFxuICAjIFwid2FybXVwX2l0ZXJzXCI6IDUwMCxcbiAgXCJjaGVja3BvaW50X2ZhY3RvclwiOiA1MDAsXG4gIFwiZXZhbF9pbnRlcnZhbFwiOiAyNTAsXG4gIFwiZXZhbF9pdGVyc1wiOiA1MCxcblxuICBcImxvZ19pbnRlcnZhbFwiOiAxLFxuICBcInN0ZXBzX3Blcl9wcmludFwiOiAxLFxuICBcIndhbGxfY2xvY2tfYnJlYWtkb3duXCI6IHRydWUsXG5cbiAgIyBcInRva2VuaXplcl90eXBlXCI6IFwiU1BNVG9rZW5pemVyXCIsXG4gICMgXCJ2b2NhYi1maWxlXCI6IFwiY29kZWxsYW1hL3Rva2VuaXplci5tb2RlbFwiLCAjIHVzZSB0b2tlbml6ZXIubW9kZWwgZnJvbSBNZXRhIENvZGVMbGFtYSBkb3dubG9hZFxuXG4gICMgXCJzYXZlXCI6IFwiL3BhdGgvdG8vc2F2ZS9sbGVtYS1yZXBsaWNhdGlvblwiLFxuICAjICNcImxvYWRcIjogXCJcIiwgIyBvbmNlIHJ1biBpcyBzdGFydGVkLCB0byByZXN0YXJ0IGZyb20gaW50ZXJtZWRpYXRlIGNrcHQgdXNlIFwibG9hZFwiID0gXCJzYXZlXCJcbiAgIyBcImxvYWRcIjogXCIvcGF0aC90by9jb252ZXJ0ZWQvY29kZWxsYW1hXzdiX3dlaWdodHNfd2l0aF9tcDJcIixcblxuICAjIFwiZmluZXR1bmVcIjogdHJ1ZSwgIyBzZXQgdG8gZmFsc2Ugb25jZSByZXN1bWluZyBmcm9tIGludGVybWVkaWF0ZSBmaW5ldHVuaW5nIHN0ZXBcblxuICAjIHByb2ZpbGluZyBzZXR0aW5nc1xuICBcInByb2ZpbGVcIjogVHJ1ZSxcbiAgXCJwcm9maWxlX3N0ZXBfc3RhcnRcIjogMixcbiAgXCJwcm9maWxlX3N0ZXBfc3RvcFwiOiA3LFxuXG4gICMgZGlzdHJpYnV0ZWQgdHJhaW5pbmcgc2V0dGluZ3NcbiAgXCJsYXVuY2hlclwiOiBcInNsdXJtXCIsXG4gIFwiZGVlcHNwZWVkX3NsdXJtXCI6IHRydWUsXG5cbn0iLCAibG9jYWxfc2V0dXAueW1sIjogIiMgU3VnZ2VzdGVkIGRhdGEgcGF0aHMgd2hlbiB1c2luZyBHUFQtTmVvWCBsb2NhbGx5XG57XG4gIFwiZGF0YV9wYXRoXCI6IFwiL3dvcmsvMDg3NzUvYnl6MjAyMi92aXN0YS9kYXRhL2dwdC1uZW94L2RhdGEvdGVzdF90ZXh0X2RvY3VtZW50XCIsXG5cbiAgIyBvciBmb3Igd2VpZ2h0ZWQgZGF0YXNldHM6XG4gICMgXCJ0cmFpbi1kYXRhLXBhdGhzXCI6IFtcImRhdGEvZW53aWs4L2Vud2lrOF90ZXh0X2RvY3VtZW50XCIsIFwiZGF0YS9lbndpazgvZW53aWs4X3RleHRfZG9jdW1lbnRcIl0sXG4gICMgXCJ0ZXN0LWRhdGEtcGF0aHNcIjogW1wiZGF0YS9lbndpazgvZW53aWs4X3RleHRfZG9jdW1lbnRcIiwgXCJkYXRhL2Vud2lrOC9lbndpazhfdGV4dF9kb2N1bWVudFwiXSxcbiAgIyBcInZhbGlkLWRhdGEtcGF0aHNcIjogW1wiZGF0YS9lbndpazgvZW53aWs4X3RleHRfZG9jdW1lbnRcIiwgXCJkYXRhL2Vud2lrOC9lbndpazhfdGV4dF9kb2N1bWVudFwiXSxcbiAgIyBcInRyYWluLWRhdGEtd2VpZ2h0c1wiOiBbMS4sIDIuXSxcbiAgIyBcInRlc3QtZGF0YS13ZWlnaHRzXCI6IFsyLiwgMS5dLFxuICAjIFwidmFsaWQtZGF0YS13ZWlnaHRzXCI6IFswLjUsIDAuNF0sXG5cbiAgIyBJZiB3ZWlnaHRfYnlfbnVtX2RvY3VtZW50cyBpcyBUcnVlLCBCdWlsZHMgZGF0YXNldCB3ZWlnaHRzIGZyb20gYSBtdWx0aW5vbWlhbCBkaXN0cmlidXRpb24gb3ZlciBncm91cHMgb2YgZGF0YSBhY2NvcmRpbmcgdG8gdGhlIG51bWJlciBvZiBkb2N1bWVudHMgaW4gZWFjaCBncm91cC5cbiAgIyBXQVJOSU5HOiBzZXR0aW5nIHRoaXMgdG8gVHJ1ZSB3aWxsIG92ZXJyaWRlIGFueSB1c2VyIHByb3ZpZGVkIHdlaWdodHNcbiAgIyBcIndlaWdodF9ieV9udW1fZG9jdW1lbnRzXCI6IGZhbHNlLFxuICAjIFwid2VpZ2h0ZWRfc2FtcGxlcl9hbHBoYVwiOiAwLjMsXG5cbiAgXCJ2b2NhYl9maWxlXCI6IFwiL3dvcmsvMDg3NzUvYnl6MjAyMi92aXN0YS9kYXRhL2dwdC1uZW94L2RhdGEvZ3B0Mi12b2NhYi5qc29uXCIsXG4gIFwibWVyZ2VfZmlsZVwiOiBcIi93b3JrLzA4Nzc1L2J5ejIwMjIvdmlzdGEvZGF0YS9ncHQtbmVveC9kYXRhL2dwdDItbWVyZ2VzLnR4dFwiLFxuXG4gIFwic2F2ZVwiOiBcIi93b3JrLzA4Nzc1L2J5ejIwMjIvdmlzdGEvZ3B0LW5lb3hfMjAyNDEyMTAvZ3B0LW5lb3gvY2hlY2twb2ludHNfdGVzdFwiLFxuICBcImxvYWRcIjogXCIvd29yay8wODc3NS9ieXoyMDIyL3Zpc3RhL2dwdC1uZW94XzIwMjQxMjEwL2dwdC1uZW94L2NoZWNrcG9pbnRzX3Rlc3QyXCIsXG4gIFwiY2hlY2twb2ludF92YWxpZGF0aW9uX3dpdGhfZm9yd2FyZF9wYXNzXCI6IEZhbHNlLFxuXG4gICMgXCJ0ZW5zb3Jib2FyZF9kaXJcIjogXCJ0ZW5zb3Jib2FyZFwiLFxuICAjIFwibG9nX2RpclwiOiBcImxvZ3NcIixcbiAgXCJ1c2Vfd2FuZGJcIjogRmFsc2UsXG4gIFwid2FuZGJfaG9zdFwiOiBcImh0dHBzOi8vYXBpLndhbmRiLmFpXCIsXG4gIFwid2FuZGJfcHJvamVjdFwiOiBcIm5lb3hcIlxufSJ9LCAibG9hZCI6ICIvd29yay8wODc3NS9ieXoyMDIyL3Zpc3RhL2dwdC1uZW94XzIwMjQxMjEwL2dwdC1uZW94L2NoZWNrcG9pbnRzX3Rlc3QyIiwgImNoZWNrcG9pbnRfZmFjdG9yIjogNTAwLCAiYmF0Y2hfc2l6ZSI6IDQsICJ0cmFpbl9pdGVycyI6IDgsICJldmFsX2l0ZXJzIjogNTAsICJldmFsX2ludGVydmFsIjogMjUwLCAidm9jYWJfZmlsZSI6ICIvd29yay8wODc3NS9ieXoyMDIyL3Zpc3RhL2RhdGEvZ3B0LW5lb3gvZGF0YS9ncHQyLXZvY2FiLmpzb24iLCAibWVyZ2VfZmlsZSI6ICIvd29yay8wODc3NS9ieXoyMDIyL3Zpc3RhL2RhdGEvZ3B0LW5lb3gvZGF0YS9ncHQyLW1lcmdlcy50eHQiLCAiY2hlY2twb2ludF9hY3RpdmF0aW9ucyI6IHRydWUsICJzeW5jaHJvbml6ZV9lYWNoX2xheWVyIjogdHJ1ZSwgInBhcnRpdGlvbl9hY3RpdmF0aW9ucyI6IHRydWUsICJkeW5hbWljX2xvc3Nfc2NhbGUiOiB0cnVlLCAicGlwZV9wYXJhbGxlbF9zaXplIjogNCwgIm1vZGVsX3BhcmFsbGVsX3NpemUiOiAyLCAid29ybGRfc2l6ZSI6IDE2LCAiaXNfcGlwZV9wYXJhbGxlbCI6IHRydWUsICJ1c2Vfd2FuZGIiOiBmYWxzZSwgImxvZ19pbnRlcnZhbCI6IDEsICJwcm9maWxlIjogdHJ1ZSwgInByb2ZpbGVfc3RlcF9zdGFydCI6IDIsICJwcm9maWxlX3N0ZXBfc3RvcCI6IDcsICJ0ZXh0X2dlbl90eXBlIjogInVuY29uZGl0aW9uYWwiLCAibG9jYWxfcmFuayI6IDAsICJyYW5rIjogMCwgImRlZXBzcGVlZF9zbHVybSI6IHRydWUsICJ1c2VyX3NjcmlwdCI6ICIvd29yay8wODc3NS9ieXoyMDIyL3Zpc3RhL2dwdC1uZW94XzIwMjQxMjEwL2dwdC1uZW94L3RyYWluX3Byb2ZpbGluZy5weSIsICJnbG9iYWxfbnVtX2dwdXMiOiAxNn0=
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+[2025-01-29 15:30:31,396] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+[2025-01-29 15:30:32,885] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:32,958] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:32,979] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:32,988] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:32,989] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:32,998] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+[2025-01-29 15:30:33,219] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:33,233] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:33,242] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:33,250] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:33,254] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:33,257] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:33,259] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:33,264] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-01-29 15:30:33,266] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+NeoXArgs.configure_distributed_args() using world size: 16 and model-parallel size: 2 
+> building GPT2BPETokenizer tokenizer ...
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+ > padded vocab (size: 50257) with 175 dummy tokens (new size: 50432)
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+Detected CUDA files, patching ldflags
+Emitting ninja build file /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/fused_kernels/build/build.ninja...
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Building extension module scaled_upper_triang_masked_softmax_cuda...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:49: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/deepspeed/runtime/zero/linear.py:67: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+ninja: no work to do.
+Loading extension module scaled_upper_triang_masked_softmax_cuda...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/fused_kernels/build/build.ninja...
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Building extension module scaled_masked_softmax_cuda...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module scaled_masked_softmax_cuda...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/fused_kernels/build/build.ninja...
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Building extension module fused_rotary_positional_embedding...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module fused_rotary_positional_embedding...
+> initializing torch distributed ...
+[2025-01-29 15:30:35,027] [INFO] [comm.py:637:init_distributed] cdb=None
+[2025-01-29 15:30:35,027] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:38,443] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:40,010] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:41,361] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:42,717] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+[2025-01-29 15:30:44,186] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:45,838] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:47,338] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/gpt2_dataset.py:373: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  counts = torch.cuda.LongTensor([1])
+[2025-01-29 15:30:48,968] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:50,502] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:51,840] [INFO] [comm.py:637:init_distributed] cdb=None
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+[2025-01-29 15:30:53,329] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+[2025-01-29 15:30:53,367] [INFO] [comm.py:637:init_distributed] cdb=None
+[2025-01-29 15:30:53,367] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/gpt2_dataset.py:373: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  counts = torch.cuda.LongTensor([1])
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/gpt2_dataset.py:373: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  counts = torch.cuda.LongTensor([1])
+[2025-01-29 15:30:54,632] [INFO] [comm.py:637:init_distributed] cdb=None
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+[2025-01-29 15:30:56,284] [INFO] [comm.py:637:init_distributed] cdb=None
+> initializing model parallel with size 2
+MPU DP: [0, 2]
+MPU DP: [1, 3]
+MPU DP: [4, 6]
+MPU DP: [5, 7]
+MPU DP: [8, 10]
+MPU DP: [9, 11]
+MPU DP: [12, 14]
+MPU DP: [13, 15]
+MPU PP: [0, 4, 8, 12]
+MPU PP: [1, 5, 9, 13]
+MPU PP: [2, 6, 10, 14]
+MPU PP: [3, 7, 11, 15]
+MPU IO: [0, 2, 12, 14]
+MPU MP: [0, 1]
+MPU MP: [2, 3]
+MPU MP: [4, 5]
+MPU MP: [6, 7]
+MPU MP: [8, 9]
+MPU MP: [10, 11]
+MPU MP: [12, 13]
+MPU MP: [14, 15]
+> setting random seeds to 1234 ...
+[2025-01-29 15:30:56,296] [INFO] [checkpointing.py:227:model_parallel_cuda_manual_seed] > initializing model parallel cuda seeds on global rank 0, model parallel rank 0, and data parallel rank 0 with model parallel seed: 3952 and data parallel seed: 1234
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/data_utils.py:666: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+make: Entering directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+make: python3-config: No such file or directory
+make: python3-config: No such file or directory
+make: Nothing to be done for 'default'.
+make: Leaving directory '/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data'
+> building train, validation, and test datasets ...
+    reading sizes...
+    reading pointers...
+    reading document index...
+    creating numpy buffer of mmap...
+    creating memory view of numpy buffer...
+ > dataset split:
+    train:
+     document indices in [0, 207923) total of 207923 documents
+    validation:
+     document indices in [207923, 214360) total of 6437 documents
+    test:
+     document indices in [214360, 214575) total of 215 documents
+ > WARNING: could not find index map files, building the indices on rank 0 ...
+ > elapsed time to build and save doc-idx mapping (seconds): 0.008351
+    using:
+     number of documents:       207923
+     number of epochs:          1
+     sequence length:           4096
+     total number of samples:   88586
+ > elapsed time to build and save sample-idx mapping (seconds): 0.005006
+ > elapsed time to build and save shuffle-idx mapping (seconds): 0.002479
+/work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/megatron/data/gpt2_dataset.py:373: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:78.)
+  counts = torch.cuda.LongTensor([1])
+ > loading doc-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_train_indexmap_512ns_4096sl_1234s_packedpi_ac_doc_idx.npy
+ > loading sample-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_train_indexmap_512ns_4096sl_1234s_packedpi_ac_sample_idx.npy
+ > loading shuffle-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_train_indexmap_512ns_4096sl_1234s_packedpi_ac_shuffle_idx.npy
+    loaded indexed file in 0.012 seconds
+    total number of samples: 88587
+    total number of epochs: 1
+ > WARNING: could not find index map files, building the indices on rank 0 ...
+ > elapsed time to build and save doc-idx mapping (seconds): 0.001887
+    using:
+     number of documents:       6437
+     number of epochs:          2
+     sequence length:           4096
+     total number of samples:   4987
+ > elapsed time to build and save sample-idx mapping (seconds): 0.001509
+ > elapsed time to build and save shuffle-idx mapping (seconds): 0.001365
+ > loading doc-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_valid_indexmap_3200ns_4096sl_1234s_packedpi_ac_doc_idx.npy
+ > loading sample-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_valid_indexmap_3200ns_4096sl_1234s_packedpi_ac_sample_idx.npy
+ > loading shuffle-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_valid_indexmap_3200ns_4096sl_1234s_packedpi_ac_shuffle_idx.npy
+    loaded indexed file in 0.001 seconds
+    total number of samples: 4988
+    total number of epochs: 2
+ > WARNING: could not find index map files, building the indices on rank 0 ...
+ > elapsed time to build and save doc-idx mapping (seconds): 0.001489
+    using:
+     number of documents:       215
+     number of epochs:          57
+     sequence length:           4096
+     total number of samples:   3209
+ > elapsed time to build and save sample-idx mapping (seconds): 0.001337
+ > elapsed time to build and save shuffle-idx mapping (seconds): 0.001326
+ > loading doc-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_test_indexmap_3200ns_4096sl_1234s_packedpi_ac_doc_idx.npy
+ > loading sample-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_test_indexmap_3200ns_4096sl_1234s_packedpi_ac_sample_idx.npy
+ > loading shuffle-idx mapping from /work/08775/byz2022/vista/data/gpt-neox/data/test_text_document_test_indexmap_3200ns_4096sl_1234s_packedpi_ac_shuffle_idx.npy
+    loaded indexed file in 0.001 seconds
+    total number of samples: 3210
+    total number of epochs: 57
+building GPT2 model ...
+SEED_LAYERS=False BASE_SEED=1234 SEED_FN=None
+Using topology: {ProcessCoord(pipe=0, data=0, model=0): 0, ProcessCoord(pipe=0, data=0, model=1): 1, ProcessCoord(pipe=0, data=1, model=0): 2, ProcessCoord(pipe=0, data=1, model=1): 3, ProcessCoord(pipe=1, data=0, model=0): 4, ProcessCoord(pipe=1, data=0, model=1): 5, ProcessCoord(pipe=1, data=1, model=0): 6, ProcessCoord(pipe=1, data=1, model=1): 7, ProcessCoord(pipe=2, data=0, model=0): 8, ProcessCoord(pipe=2, data=0, model=1): 9, ProcessCoord(pipe=2, data=1, model=0): 10, ProcessCoord(pipe=2, data=1, model=1): 11, ProcessCoord(pipe=3, data=0, model=0): 12, ProcessCoord(pipe=3, data=0, model=1): 13, ProcessCoord(pipe=3, data=1, model=0): 14, ProcessCoord(pipe=3, data=1, model=1): 15}
+[2025-01-29 15:30:56,943] [INFO] [module.py:375:_partition_layers] Partitioning pipeline stages with method type:transformer|mlp
+stage=0 layers=10
+     0: EmbeddingPipe
+     1: _pre_transformer_block
+     2: ParallelTransformerLayerPipe
+     3: ParallelTransformerLayerPipe
+     4: ParallelTransformerLayerPipe
+     5: ParallelTransformerLayerPipe
+     6: ParallelTransformerLayerPipe
+     7: ParallelTransformerLayerPipe
+     8: ParallelTransformerLayerPipe
+     9: ParallelTransformerLayerPipe
+stage=1 layers=9
+    10: ParallelTransformerLayerPipe
+    11: ParallelTransformerLayerPipe
+    12: ParallelTransformerLayerPipe
+    13: ParallelTransformerLayerPipe
+    14: ParallelTransformerLayerPipe
+    15: ParallelTransformerLayerPipe
+    16: ParallelTransformerLayerPipe
+    17: ParallelTransformerLayerPipe
+    18: ParallelTransformerLayerPipe
+stage=2 layers=9
+    19: ParallelTransformerLayerPipe
+    20: ParallelTransformerLayerPipe
+    21: ParallelTransformerLayerPipe
+    22: ParallelTransformerLayerPipe
+    23: ParallelTransformerLayerPipe
+    24: ParallelTransformerLayerPipe
+    25: ParallelTransformerLayerPipe
+    26: ParallelTransformerLayerPipe
+    27: ParallelTransformerLayerPipe
+stage=3 layers=9
+    28: ParallelTransformerLayerPipe
+    29: ParallelTransformerLayerPipe
+    30: ParallelTransformerLayerPipe
+    31: ParallelTransformerLayerPipe
+    32: ParallelTransformerLayerPipe
+    33: ParallelTransformerLayerPipe
+    34: _post_transformer_block
+    35: NormPipe
+    36: ParallelLinearPipe
+  loss: partial
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+Configuring Optimizer type: Adam with params: {'lr': 0.0001, 'betas': [0.9, 0.95], 'eps': 1e-08}
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+WARNING: APEX not installed - defaulting to deepspeed's fused adam
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /home1/08775/byz2022/.cache/torch_extensions/py39_cu124/fused_adam/build.ninja...
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/utils/cpp_extension.py:2010: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Building extension module fused_adam...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+Using /home1/08775/byz2022/.cache/torch_extensions/py39_cu124 as PyTorch extensions root...
+ninja: no work to do.
+Loading extension module fused_adam...
+Time to load fused_adam op: 0.10799765586853027 seconds
+[2025-01-29 15:30:58,075] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+Time to load fused_adam op: 0.12112784385681152 seconds
+[2025-01-29 15:30:58,088] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Time to load fused_adam op: 0.12471461296081543 seconds
+[2025-01-29 15:30:58,092] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+Time to load fused_adam op: 3.0290019512176514 seconds
+[2025-01-29 15:31:00,996] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Time to load fused_adam op: 3.030932664871216 seconds
+[2025-01-29 15:31:01,002] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+Time to load fused_adam op: 3.0255255699157715 seconds
+Loading extension module fused_adam...
+[2025-01-29 15:31:01,013] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Time to load fused_adam op: 3.0248234272003174 seconds
+[2025-01-29 15:31:01,015] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+Time to load fused_adam op: 3.0356016159057617 seconds
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+[2025-01-29 15:31:01,024] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Loading extension module fused_adam...
+Time to load fused_adam op: 3.023953676223755 seconds
+Time to load fused_adam op: 3.033968925476074 seconds
+[2025-01-29 15:31:01,026] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+[2025-01-29 15:31:01,027] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Time to load fused_adam op: 3.025996685028076 seconds
+[2025-01-29 15:31:01,028] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Time to load fused_adam op: 3.022362470626831 seconds
+> learning rate decay style: cosine
+DeepSpeed is enabled.
+[2025-01-29 15:31:01,028] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed info: version=0.12.4+02e2ebf, git-hash=02e2ebf, git-branch=HEAD
+[2025-01-29 15:31:01,029] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Time to load fused_adam op: 3.0287299156188965 seconds
+Time to load fused_adam op: 3.0265414714813232 seconds
+[2025-01-29 15:31:01,035] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Time to load fused_adam op: 3.0550506114959717 seconds
+[2025-01-29 15:31:01,036] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+[2025-01-29 15:31:01,036] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+Time to load fused_adam op: 3.030313014984131 seconds
+[2025-01-29 15:31:01,037] [WARNING] [config_utils.py:69:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+[2025-01-29 15:31:01,139] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2025-01-29 15:31:01,139] [INFO] [logging.py:96:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2025-01-29 15:31:01,139] [INFO] [logging.py:96:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+[2025-01-29 15:31:01,140] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdam
+[2025-01-29 15:31:01,140] [INFO] [utils.py:56:is_zero_supported_optimizer] Checking ZeRO support for optimizer=FusedAdam type=<class 'deepspeed.ops.adam.fused_adam.FusedAdam'>
+[2025-01-29 15:31:01,140] [INFO] [logging.py:96:log_dist] [Rank 0] Creating torch.float16 ZeRO stage 1 optimizer
+[2025-01-29 15:31:01,140] [INFO] [stage_1_and_2.py:149:__init__] Reduce bucket size 1260000000
+[2025-01-29 15:31:01,140] [INFO] [stage_1_and_2.py:150:__init__] Allgather bucket size 1260000000
+[2025-01-29 15:31:01,140] [INFO] [stage_1_and_2.py:151:__init__] CPU Offload: False
+[2025-01-29 15:31:01,140] [INFO] [stage_1_and_2.py:152:__init__] Round robin gradient partitioning: False
+[2025-01-29 15:31:03,175] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:03,186] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:04,944] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:04,978] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:05,052] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:05,117] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,047] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,095] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,116] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,141] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,145] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,146] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,152] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,162] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,177] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,319] [INFO] [utils.py:802:see_memory_usage] Before initializing optimizer states
+[2025-01-29 15:31:06,320] [INFO] [utils.py:803:see_memory_usage] MA 3.39 GB         Max_MA 3.39 GB         CA 3.39 GB         Max_CA 3 GB 
+[2025-01-29 15:31:06,320] [INFO] [utils.py:810:see_memory_usage] CPU Virtual Memory:  used = 23.7 GB, percent = 11.1%
+[2025-01-29 15:31:06,388] [INFO] [utils.py:802:see_memory_usage] After initializing optimizer states
+[2025-01-29 15:31:06,389] [INFO] [utils.py:803:see_memory_usage] MA 6.77 GB         Max_MA 8.47 GB         CA 8.47 GB         Max_CA 8 GB 
+[2025-01-29 15:31:06,389] [INFO] [utils.py:810:see_memory_usage] CPU Virtual Memory:  used = 28.77 GB, percent = 13.5%
+[2025-01-29 15:31:06,389] [INFO] [stage_1_and_2.py:517:__init__] optimizer state initialized
+[2025-01-29 15:31:06,442] [INFO] [utils.py:802:see_memory_usage] After initializing ZeRO optimizer
+[2025-01-29 15:31:06,442] [INFO] [utils.py:803:see_memory_usage] MA 6.77 GB         Max_MA 6.77 GB         CA 8.47 GB         Max_CA 8 GB 
+[2025-01-29 15:31:06,442] [INFO] [utils.py:810:see_memory_usage] CPU Virtual Memory:  used = 28.77 GB, percent = 13.5%
+[2025-01-29 15:31:06,444] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Final Optimizer = FusedAdam
+[2025-01-29 15:31:06,444] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[2025-01-29 15:31:06,444] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed LR Scheduler = <megatron.learning_rates.AnnealingLR object at 0x400313f4b2e0>
+[2025-01-29 15:31:06,444] [INFO] [logging.py:96:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0, 0.0], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:06,444] [INFO] [config.py:979:print] DeepSpeedEngine configuration:
+[2025-01-29 15:31:06,444] [INFO] [config.py:983:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   amp_enabled .................. False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   amp_params ................... False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   bfloat16_enabled ............. False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   checkpoint_parallel_write_pipeline  False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   checkpoint_tag_validation_enabled  True
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   checkpoint_tag_validation_fail  False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x4003b399bc10>
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   communication_data_type ...... None
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   curriculum_enabled_legacy .... False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   curriculum_params_legacy ..... False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   data_efficiency_enabled ...... False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   dataloader_drop_last ......... False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   disable_allgather ............ False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   dump_state ................... False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   dynamic_loss_scale_args ...... {'init_scale': 65536, 'scale_window': 1000, 'delayed_shift': 2, 'consecutive_hysteresis': False, 'min_scale': 1}
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   eigenvalue_enabled ........... False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   eigenvalue_gas_boundary_resolution  1
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   eigenvalue_layer_num ......... 0
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   eigenvalue_max_iter .......... 100
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   eigenvalue_stability ......... 1e-06
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   eigenvalue_tol ............... 0.01
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   eigenvalue_verbose ........... False
+[2025-01-29 15:31:06,445] [INFO] [config.py:983:print]   elasticity_enabled ........... False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   fp16_auto_cast ............... False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   fp16_enabled ................. True
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   fp16_master_weights_and_gradients  False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   global_rank .................. 0
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   grad_accum_dtype ............. None
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   gradient_accumulation_steps .. 8
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   gradient_clipping ............ 0.0
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   gradient_predivide_factor .... 1.0
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   initial_dynamic_scale ........ 65536
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   load_universal_checkpoint .... False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   loss_scale ................... 0
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   memory_breakdown ............. False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   mics_hierarchial_params_gather  False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   mics_shard_size .............. -1
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') enabled=False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   optimizer_legacy_fusion ...... False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   optimizer_name ............... adam
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   optimizer_params ............. {'lr': 0.0001, 'betas': [0.9, 0.95], 'eps': 1e-08}
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   pld_enabled .................. False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   pld_params ................... False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   prescale_gradients ........... False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   scheduler_name ............... None
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   scheduler_params ............. None
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   seq_parallel_communication_data_type  torch.float32
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   sparse_attention ............. None
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   sparse_gradients_enabled ..... False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   steps_per_print .............. 1
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   train_batch_size ............. 64
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   train_micro_batch_size_per_gpu  4
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   use_data_before_expert_parallel_  False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   use_node_local_storage ....... False
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   wall_clock_breakdown ......... True
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   weight_quantization_config ... None
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   world_size ................... 2
+[2025-01-29 15:31:06,446] [INFO] [config.py:983:print]   zero_allow_untested_optimizer  False
+[2025-01-29 15:31:06,447] [INFO] [config.py:983:print]   zero_config .................. stage=1 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=1260000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=1260000000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[2025-01-29 15:31:06,447] [INFO] [config.py:983:print]   zero_enabled ................. True
+[2025-01-29 15:31:06,447] [INFO] [config.py:983:print]   zero_force_ds_cpu_optimizer .. True
+[2025-01-29 15:31:06,447] [INFO] [config.py:983:print]   zero_optimization_stage ...... 1
+[2025-01-29 15:31:06,447] [INFO] [config.py:969:print_user_config]   json = {
+    "train_batch_size": 64, 
+    "train_micro_batch_size_per_gpu": 4, 
+    "gradient_accumulation_steps": 8, 
+    "optimizer": {
+        "type": "Adam", 
+        "params": {
+            "lr": 0.0001, 
+            "betas": [0.9, 0.95], 
+            "eps": 1e-08
+        }
+    }, 
+    "fp16": {
+        "fp16": true, 
+        "enabled": true, 
+        "loss_scale": 0, 
+        "loss_scale_window": 1000, 
+        "hysteresis": 2, 
+        "min_loss_scale": 1
+    }, 
+    "zero_optimization": {
+        "stage": 1, 
+        "allgather_partitions": true, 
+        "allgather_bucket_size": 1.260000e+09, 
+        "overlap_comm": true, 
+        "reduce_scatter": true, 
+        "reduce_bucket_size": 1.260000e+09, 
+        "contiguous_gradients": true, 
+        "cpu_offload": false
+    }, 
+    "steps_per_print": 1, 
+    "wall_clock_breakdown": true
+}
+[2025-01-29 15:31:06,447] [INFO] [engine.py:99:__init__] CONFIG: micro_batches=8 micro_batch_size=4
+[2025-01-29 15:31:06,447] [INFO] [engine.py:139:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2025-01-29 15:31:06,604] [INFO] [engine.py:158:__init__] RANK=0 STAGE=0 LAYERS=10 [0, 10) STAGE_PARAMS=908754944 (908.755M) TOTAL_PARAMS=6856908800 (6856.909M) UNIQUE_PARAMS=6856908800 (6856.909M)
+[2025-01-29 15:31:06,604] [INFO] [engine.py:158:__init__] RANK=13 STAGE=3 LAYERS=9 [28, 37) STAGE_PARAMS=707391488 (707.391M) TOTAL_PARAMS=6856908800 (6856.909M) UNIQUE_PARAMS=6856908800 (6856.909M)
+[2025-01-29 15:31:06,604] [INFO] [engine.py:158:__init__] RANK=4 STAGE=1 LAYERS=9 [10, 19) STAGE_PARAMS=906153984 (906.154M) TOTAL_PARAMS=6856908800 (6856.909M) UNIQUE_PARAMS=6856908800 (6856.909M)
+[2025-01-29 15:31:06,604] [INFO] [engine.py:158:__init__] RANK=8 STAGE=2 LAYERS=9 [19, 28) STAGE_PARAMS=906153984 (906.154M) TOTAL_PARAMS=6856908800 (6856.909M) UNIQUE_PARAMS=6856908800 (6856.909M)
+[2025-01-29 15:31:06,604] [INFO] [engine.py:158:__init__] RANK=5 STAGE=1 LAYERS=9 [10, 19) STAGE_PARAMS=906153984 (906.154M) TOTAL_PARAMS=6856908800 (6856.909M) UNIQUE_PARAMS=6856908800 (6856.909M)
+[2025-01-29 15:31:06,604] [INFO] [engine.py:158:__init__] RANK=1 STAGE=0 LAYERS=10 [0, 10) STAGE_PARAMS=908754944 (908.755M) TOTAL_PARAMS=6856908800 (6856.909M) UNIQUE_PARAMS=6856908800 (6856.909M)
+[2025-01-29 15:31:06,604] [INFO] [engine.py:158:__init__] RANK=9 STAGE=2 LAYERS=9 [19, 28) STAGE_PARAMS=906153984 (906.154M) TOTAL_PARAMS=6856908800 (6856.909M) UNIQUE_PARAMS=6856908800 (6856.909M)
+[2025-01-29 15:31:06,603] [INFO] [engine.py:158:__init__] RANK=12 STAGE=3 LAYERS=9 [28, 37) STAGE_PARAMS=707391488 (707.391M) TOTAL_PARAMS=6856908800 (6856.909M) UNIQUE_PARAMS=6856908800 (6856.909M)
+ > number of parameters on model parallel rank 0: 707391488
+ > number of parameters on model parallel rank 0: 908754944
+ > number of parameters on model parallel rank 1: 908754944
+ > number of parameters on model parallel rank 0: 906153984
+ > number of parameters on model parallel rank 0: 906153984
+ > number of parameters on model parallel rank 1: 707391488
+ > number of parameters on model parallel rank 1: 906153984
+ > number of parameters on model parallel rank 1: 906153984
+ > total params: 6,856,908,800
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+Unable to load checkpoint.
+Loading checkpoint and starting from iteration 0
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+Unable to load checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+Unable to load checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+Unable to load checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+Unable to load checkpoint.
+setting training data start iteration to 0
+Unable to load checkpoint.
+[2025-01-29 15:31:06,778] [WARNING] [engine.py:2703:load_checkpoint] Unable to find latest file at /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test2/latest, if trying to load latest checkpoint please ensure this file exists or pass an explicit checkpoint tag when loading a checkpoint.
+setting validation data start iteration to 0
+Unable to load checkpoint.
+Unable to load checkpoint.
+done with setups ...
+time (ms) | train/valid/test data loaders: 630.27 | model and optimizer: 9836.72 | train/valid/test data iterators: 46.18
+training ...
+[2025-01-29 15:31:06,921] [INFO] [checkpointing.py:540:forward] Activation Checkpointing Information
+[2025-01-29 15:31:06,921] [INFO] [checkpointing.py:541:forward] ----Partition Activations True, CPU CHECKPOINTING False
+[2025-01-29 15:31:06,921] [INFO] [checkpointing.py:542:forward] ----contiguous Memory Checkpointing False with 32 total layers
+[2025-01-29 15:31:06,921] [INFO] [checkpointing.py:544:forward] ----Synchronization True
+[2025-01-29 15:31:06,921] [INFO] [checkpointing.py:545:forward] ----Profiling time in checkpointing False
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/work/08775/byz2022/vista/pythonenvs/gptneox/lib64/python3.9/site-packages/torch/autograd/graph.py:823: UserWarning: c10d::broadcast_: an autograd kernel was not registered to the Autograd key(s) but we are trying to backprop through it. This may lead to silently incorrect behavior. This behavior is deprecated and will be removed in a future version of PyTorch. If your operator is differentiable, please ensure you have registered an autograd kernel to the correct Autograd key (e.g. DispatchKey::Autograd, DispatchKey::CompositeImplicitAutograd). If your operator is not differentiable, or to squash this warning and use the previous behavior, please register torch::CppFunction::makeFallthrough() to DispatchKey::Autograd. (Triggered internally at /pytorch/torch/csrc/autograd/autograd_not_implemented_fallback.cpp:62.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[2025-01-29 15:31:13,910] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | optimizer_allgather: 20.64 | optimizer_gradients: 5.35 | optimizer_step: 4.96
+[2025-01-29 15:31:13,910] [INFO] [logging.py:96:log_dist] [Rank 0] step=1, skipped=0, lr=[9.670739301325534e-05, 9.670739301325534e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:13,911] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | batch_input: 51.93 | fwd_microstep: 1295.27 | bwd_microstep: 2566.30 | bwd_inner_microstep: 2566.21 | bwd_allreduce_microstep: 0.00 | step_microstep: 42.84
+[2025-01-29 15:31:13,911] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | fwd: 1295.30 | bwd: 2566.27 | bwd_inner: 2566.19 | bwd_allreduce: 0.00 | step: 42.85
+steps: 1 loss: 11.7242 iter time (s): 7.234 samples/sec: 8.847
+[2025-01-29 15:31:14,062] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | pipe_send_output: 870.39 | pipe_recv_grad: 2207.52
+ samples/sec: 8.843 | iteration        1/       8 | elapsed time per iteration (ms): 7237.7 | learning rate: 9.671E-05 | approx flops per GPU: 138.9TFLOPS | lm_loss: 1.172419E+01 | loss scale: 65536.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+after 1 iterations memory (MB) | allocated: 7130.2607421875 | max allocated: 13683.2626953125 | reserved: 17786.0 | max reserved: 17786.0
+time (ms)
+[2025-01-29 15:31:19,113] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | optimizer_allgather: 19.89 | optimizer_gradients: 3.31 | optimizer_step: 4.99
+[2025-01-29 15:31:19,113] [INFO] [logging.py:96:log_dist] [Rank 0] step=2, skipped=0, lr=[8.618670190525352e-05, 8.618670190525352e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:19,114] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | batch_input: 8.42 | fwd_microstep: 902.95 | bwd_microstep: 2476.30 | bwd_inner_microstep: 2476.26 | bwd_allreduce_microstep: 0.00 | step_microstep: 37.86
+[2025-01-29 15:31:19,114] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | fwd: 902.99 | bwd: 2476.30 | bwd_inner: 2476.26 | bwd_allreduce: 0.00 | step: 37.88
+steps: 2 loss: 11.6633 iter time (s): 5.049 samples/sec: 12.675
+[2025-01-29 15:31:19,115] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | pipe_send_output: 51.49 | pipe_recv_grad: 1522.71
+ samples/sec: 12.667 | iteration        2/       8 | elapsed time per iteration (ms): 5052.4 | learning rate: 8.619E-05 | approx flops per GPU: 199.0TFLOPS | lm_loss: 1.166334E+01 | loss scale: 65536.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[rank15]:[W129 15:31:19.888244717 CPUAllocator.cpp:245] Memory block of unknown size was allocated before the profiling started, profiler results will not include the deallocation event
+[2025-01-29 15:31:24,160] [INFO] [loss_scaler.py:190:update_scale] [deepspeed] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 65536, but hysteresis is 2. Reducing hysteresis to 1
+[2025-01-29 15:31:24,160] [INFO] [logging.py:96:log_dist] [Rank 0] step=3, skipped=1, lr=[8.618670190525352e-05, 8.618670190525352e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:24,161] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | batch_input: 13.70 | fwd_microstep: 924.82 | bwd_microstep: 2489.66 | bwd_inner_microstep: 2489.62 | bwd_allreduce_microstep: 0.00 | step_microstep: 5.75
+[2025-01-29 15:31:24,162] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | fwd: 924.82 | bwd: 2489.66 | bwd_inner: 2489.62 | bwd_allreduce: 0.00 | step: 5.78
+steps: 3 loss: 31.4202 iter time (s): 5.046 samples/sec: 12.685
+[2025-01-29 15:31:24,163] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | pipe_send_output: 55.02 | pipe_recv_grad: 1503.77
+ samples/sec: 12.678 | iteration        3/       8 | elapsed time per iteration (ms): 5048.1 | learning rate: 8.619E-05 | approx flops per GPU: 199.2TFLOPS | lm_loss: 0.000000E+00 | loss scale: 65536.0 | number of skipped iterations:   1 | number of nan iterations:   0 |
+time (ms)
+[2025-01-29 15:31:29,201] [INFO] [loss_scaler.py:183:update_scale] [deepspeed] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 65536, reducing to 32768
+[2025-01-29 15:31:29,201] [INFO] [logging.py:96:log_dist] [Rank 0] step=4, skipped=2, lr=[8.618670190525352e-05, 8.618670190525352e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:29,202] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | batch_input: 12.41 | fwd_microstep: 927.39 | bwd_microstep: 2492.78 | bwd_inner_microstep: 2492.74 | bwd_allreduce_microstep: 0.00 | step_microstep: 5.64
+[2025-01-29 15:31:29,203] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | fwd: 927.43 | bwd: 2492.78 | bwd_inner: 2492.74 | bwd_allreduce: 0.00 | step: 5.66
+steps: 4 loss: 31.0466 iter time (s): 5.039 samples/sec: 12.701
+[2025-01-29 15:31:29,204] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | pipe_send_output: 54.23 | pipe_recv_grad: 1496.40
+ samples/sec: 12.696 | iteration        4/       8 | elapsed time per iteration (ms): 5040.9 | learning rate: 8.619E-05 | approx flops per GPU: 199.5TFLOPS | lm_loss: 0.000000E+00 | loss scale: 32768.0 | number of skipped iterations:   1 | number of nan iterations:   0 |
+time (ms)
+[2025-01-29 15:31:34,244] [INFO] [loss_scaler.py:183:update_scale] [deepspeed] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 32768, reducing to 16384
+[2025-01-29 15:31:34,245] [INFO] [logging.py:96:log_dist] [Rank 0] step=5, skipped=3, lr=[8.618670190525352e-05, 8.618670190525352e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:34,246] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | batch_input: 12.19 | fwd_microstep: 925.22 | bwd_microstep: 2491.14 | bwd_inner_microstep: 2491.09 | bwd_allreduce_microstep: 0.00 | step_microstep: 5.51
+[2025-01-29 15:31:34,246] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | fwd: 925.26 | bwd: 2491.14 | bwd_inner: 2491.09 | bwd_allreduce: 0.00 | step: 5.54
+steps: 5 loss: 30.8655 iter time (s): 5.042 samples/sec: 12.694
+[2025-01-29 15:31:34,248] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | pipe_send_output: 55.33 | pipe_recv_grad: 1503.36
+ samples/sec: 12.689 | iteration        5/       8 | elapsed time per iteration (ms): 5043.7 | learning rate: 8.619E-05 | approx flops per GPU: 199.4TFLOPS | lm_loss: 0.000000E+00 | loss scale: 16384.0 | number of skipped iterations:   1 | number of nan iterations:   0 |
+time (ms)
+[2025-01-29 15:31:40,542] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | optimizer_allgather: 19.72 | optimizer_gradients: 3.41 | optimizer_step: 5.03
+[2025-01-29 15:31:40,542] [INFO] [logging.py:96:log_dist] [Rank 0] step=6, skipped=3, lr=[7.004652677033068e-05, 7.004652677033068e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:40,543] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | batch_input: 12.16 | fwd_microstep: 937.57 | bwd_microstep: 2500.10 | bwd_inner_microstep: 2500.06 | bwd_allreduce_microstep: 0.00 | step_microstep: 41.72
+[2025-01-29 15:31:40,544] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | fwd: 937.61 | bwd: 2500.10 | bwd_inner: 2500.06 | bwd_allreduce: 0.00 | step: 41.74
+steps: 6 loss: 30.6558 iter time (s): 6.296 samples/sec: 10.165
+[2025-01-29 15:31:40,545] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | pipe_send_output: 46.23 | pipe_recv_grad: 2706.96
+ samples/sec: 10.163 | iteration        6/       8 | elapsed time per iteration (ms): 6297.6 | learning rate: 7.005E-05 | approx flops per GPU: 159.7TFLOPS | lm_loss: 3.065581E+01 | loss scale: 16384.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2025-01-29 15:31:45,630] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | optimizer_allgather: 20.18 | optimizer_gradients: 3.36 | optimizer_step: 5.00
+[2025-01-29 15:31:45,630] [INFO] [logging.py:96:log_dist] [Rank 0] step=7, skipped=3, lr=[5.0793298191740404e-05, 5.0793298191740404e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:45,631] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | batch_input: 12.00 | fwd_microstep: 938.85 | bwd_microstep: 2507.53 | bwd_inner_microstep: 2507.49 | bwd_allreduce_microstep: 0.00 | step_microstep: 41.49
+[2025-01-29 15:31:45,632] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | fwd: 938.89 | bwd: 2507.53 | bwd_inner: 2507.48 | bwd_allreduce: 0.00 | step: 41.51
+steps: 7 loss: 16.2711 iter time (s): 5.086 samples/sec: 12.585
+[2025-01-29 15:31:45,633] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | pipe_send_output: 46.78 | pipe_recv_grad: 1489.44
+ samples/sec: 12.580 | iteration        7/       8 | elapsed time per iteration (ms): 5087.4 | learning rate: 5.079E-05 | approx flops per GPU: 197.6TFLOPS | lm_loss: 1.627111E+01 | loss scale: 16384.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2025-01-29 15:31:57,653] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | optimizer_allgather: 20.11 | optimizer_gradients: 3.27 | optimizer_step: 4.95
+[2025-01-29 15:31:57,653] [INFO] [logging.py:96:log_dist] [Rank 0] step=8, skipped=3, lr=[3.141687721698363e-05, 3.141687721698363e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2025-01-29 15:31:57,654] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | batch_input: 8.90 | fwd_microstep: 910.50 | bwd_microstep: 2457.55 | bwd_inner_microstep: 2457.51 | bwd_allreduce_microstep: 0.00 | step_microstep: 37.83
+[2025-01-29 15:31:57,654] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | fwd: 910.52 | bwd: 2457.55 | bwd_inner: 2457.51 | bwd_allreduce: 0.00 | step: 37.85
+steps: 8 loss: 15.0719 iter time (s): 5.627 samples/sec: 11.373
+[2025-01-29 15:31:57,655] [INFO] [logging.py:96:log_dist] [Rank 0] time (ms) | pipe_send_output: 584.64 | pipe_recv_grad: 1580.94
+ samples/sec: 5.323 | iteration        8/       8 | elapsed time per iteration (ms): 12022.4 | learning rate: 3.142E-05 | approx flops per GPU: 83.6TFLOPS | lm_loss: 1.507187E+01 | loss scale: 16384.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2025-01-29 15:31:57,657] [INFO] [logging.py:96:log_dist] [Rank 0] [Torch] Checkpoint global_step8 is about to be saved!
+[2025-01-29 15:31:58,156] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_10-model_00-model_states.pt...
+[2025-01-29 15:31:58,190] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_19-model_00-model_states.pt...
+[2025-01-29 15:31:58,191] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_10-model_01-model_states.pt...
+[2025-01-29 15:31:58,195] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_28-model_01-model_states.pt...
+[2025-01-29 15:31:58,197] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_28-model_00-model_states.pt...
+[2025-01-29 15:31:58,198] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_19-model_01-model_states.pt...
+[2025-01-29 15:31:58,204] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_00-model_00-model_states.pt...
+[2025-01-29 15:31:58,206] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_00-model_01-model_states.pt...
+[2025-01-29 15:31:58,290] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_10-model_00-model_states.pt.
+[2025-01-29 15:31:58,317] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_19-model_01-model_states.pt.
+[2025-01-29 15:31:58,319] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_19-model_00-model_states.pt.
+[2025-01-29 15:31:58,336] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_10-model_01-model_states.pt.
+[2025-01-29 15:31:58,396] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_00-model_00-model_states.pt.
+[2025-01-29 15:31:58,401] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_28-model_01-model_states.pt.
+[2025-01-29 15:31:58,406] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_00-model_01-model_states.pt.
+[2025-01-29 15:31:58,435] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_28-model_00-model_states.pt.
+[2025-01-29 15:31:58,831] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_11-model_00-model_states.pt...
+[2025-01-29 15:31:58,849] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_20-model_00-model_states.pt...
+[2025-01-29 15:31:58,856] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_20-model_01-model_states.pt...
+[2025-01-29 15:31:58,873] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_11-model_01-model_states.pt...
+[2025-01-29 15:31:58,888] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_02-model_00-model_states.pt...
+[2025-01-29 15:31:58,938] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_02-model_01-model_states.pt...
+[2025-01-29 15:31:58,938] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_29-model_01-model_states.pt...
+[2025-01-29 15:31:58,964] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_11-model_00-model_states.pt.
+[2025-01-29 15:31:58,964] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_20-model_01-model_states.pt.
+[2025-01-29 15:31:58,975] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_29-model_00-model_states.pt...
+[2025-01-29 15:31:58,988] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_20-model_00-model_states.pt.
+[2025-01-29 15:31:59,036] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_11-model_01-model_states.pt.
+[2025-01-29 15:31:59,056] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_29-model_01-model_states.pt.
+[2025-01-29 15:31:59,074] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_02-model_00-model_states.pt.
+[2025-01-29 15:31:59,130] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_02-model_01-model_states.pt.
+[2025-01-29 15:31:59,160] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_29-model_00-model_states.pt.
+[2025-01-29 15:31:59,501] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_12-model_00-model_states.pt...
+[2025-01-29 15:31:59,502] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_21-model_01-model_states.pt...
+[2025-01-29 15:31:59,527] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_21-model_00-model_states.pt...
+[2025-01-29 15:31:59,571] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_12-model_01-model_states.pt...
+[2025-01-29 15:31:59,590] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_30-model_01-model_states.pt...
+[2025-01-29 15:31:59,599] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_21-model_01-model_states.pt.
+[2025-01-29 15:31:59,599] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_12-model_00-model_states.pt.
+[2025-01-29 15:31:59,617] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_03-model_00-model_states.pt...
+[2025-01-29 15:31:59,664] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_03-model_01-model_states.pt...
+[2025-01-29 15:31:59,668] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_21-model_00-model_states.pt.
+[2025-01-29 15:31:59,677] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_30-model_01-model_states.pt.
+[2025-01-29 15:31:59,696] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_30-model_00-model_states.pt...
+[2025-01-29 15:31:59,759] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_03-model_00-model_states.pt.
+[2025-01-29 15:31:59,765] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_12-model_01-model_states.pt.
+[2025-01-29 15:31:59,799] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_30-model_00-model_states.pt.
+[2025-01-29 15:31:59,828] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_03-model_01-model_states.pt.
+[2025-01-29 15:32:00,133] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_22-model_01-model_states.pt...
+[2025-01-29 15:32:00,137] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_13-model_00-model_states.pt...
+[2025-01-29 15:32:00,200] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_22-model_00-model_states.pt...
+[2025-01-29 15:32:00,211] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_31-model_01-model_states.pt...
+[2025-01-29 15:32:00,292] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_04-model_00-model_states.pt...
+[2025-01-29 15:32:00,297] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_13-model_01-model_states.pt...
+[2025-01-29 15:32:00,332] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_13-model_00-model_states.pt.
+[2025-01-29 15:32:00,337] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_31-model_00-model_states.pt...
+[2025-01-29 15:32:00,343] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_31-model_01-model_states.pt.
+[2025-01-29 15:32:00,360] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_04-model_01-model_states.pt...
+[2025-01-29 15:32:00,360] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_22-model_01-model_states.pt.
+[2025-01-29 15:32:00,367] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_22-model_00-model_states.pt.
+[2025-01-29 15:32:00,431] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_13-model_01-model_states.pt.
+[2025-01-29 15:32:00,488] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_04-model_00-model_states.pt.
+[2025-01-29 15:32:00,553] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_04-model_01-model_states.pt.
+[2025-01-29 15:32:00,604] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_31-model_00-model_states.pt.
+[2025-01-29 15:32:00,871] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_14-model_00-model_states.pt...
+[2025-01-29 15:32:00,878] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_32-model_01-model_states.pt...
+[2025-01-29 15:32:00,898] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_23-model_00-model_states.pt...
+[2025-01-29 15:32:00,900] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_23-model_01-model_states.pt...
+[2025-01-29 15:32:00,964] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_14-model_01-model_states.pt...
+[2025-01-29 15:32:00,980] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_14-model_00-model_states.pt.
+[2025-01-29 15:32:00,984] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_23-model_00-model_states.pt.
+[2025-01-29 15:32:01,020] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_05-model_00-model_states.pt...
+[2025-01-29 15:32:01,054] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_32-model_01-model_states.pt.
+[2025-01-29 15:32:01,069] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_23-model_01-model_states.pt.
+[2025-01-29 15:32:01,081] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_14-model_01-model_states.pt.
+[2025-01-29 15:32:01,083] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_05-model_01-model_states.pt...
+[2025-01-29 15:32:01,145] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_32-model_00-model_states.pt...
+[2025-01-29 15:32:01,202] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_05-model_00-model_states.pt.
+[2025-01-29 15:32:01,254] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_32-model_00-model_states.pt.
+[2025-01-29 15:32:01,292] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_05-model_01-model_states.pt.
+[2025-01-29 15:32:01,520] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_24-model_00-model_states.pt...
+[2025-01-29 15:32:01,521] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_15-model_00-model_states.pt...
+[2025-01-29 15:32:01,587] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_33-model_01-model_states.pt...
+[2025-01-29 15:32:01,608] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_24-model_01-model_states.pt...
+[2025-01-29 15:32:01,612] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_15-model_01-model_states.pt...
+[2025-01-29 15:32:01,634] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_15-model_00-model_states.pt.
+[2025-01-29 15:32:01,682] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_24-model_00-model_states.pt.
+[2025-01-29 15:32:01,704] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_24-model_01-model_states.pt.
+[2025-01-29 15:32:01,738] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_33-model_01-model_states.pt.
+[2025-01-29 15:32:01,738] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_35-model_01-model_states.pt...
+[2025-01-29 15:32:01,740] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_35-model_01-model_states.pt.
+[2025-01-29 15:32:01,745] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_06-model_00-model_states.pt...
+[2025-01-29 15:32:01,747] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_15-model_01-model_states.pt.
+[2025-01-29 15:32:01,795] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_33-model_00-model_states.pt...
+[2025-01-29 15:32:01,827] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_06-model_01-model_states.pt...
+[2025-01-29 15:32:01,850] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_06-model_00-model_states.pt.
+[2025-01-29 15:32:01,882] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_33-model_00-model_states.pt.
+[2025-01-29 15:32:01,882] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_35-model_00-model_states.pt...
+[2025-01-29 15:32:01,884] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_35-model_00-model_states.pt.
+[2025-01-29 15:32:01,914] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_06-model_01-model_states.pt.
+[2025-01-29 15:32:02,171] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_16-model_00-model_states.pt...
+[2025-01-29 15:32:02,212] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_25-model_00-model_states.pt...
+[2025-01-29 15:32:02,241] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_25-model_01-model_states.pt...
+[2025-01-29 15:32:02,280] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_16-model_01-model_states.pt...
+[2025-01-29 15:32:02,287] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_36-model_01-model_states.pt...
+[2025-01-29 15:32:02,300] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_16-model_00-model_states.pt.
+[2025-01-29 15:32:02,375] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_36-model_01-model_states.pt.
+[2025-01-29 15:32:02,375] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_07_model_states.pt...
+[2025-01-29 15:32:02,377] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_07_model_states.pt.
+[2025-01-29 15:32:02,378] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_07_optim_states.pt...
+[2025-01-29 15:32:02,378] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_07_optim_states.pt...
+[2025-01-29 15:32:02,381] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_07-model_00-model_states.pt...
+[2025-01-29 15:32:02,406] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_16-model_01-model_states.pt.
+[2025-01-29 15:32:02,426] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_25-model_00-model_states.pt.
+[2025-01-29 15:32:02,429] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_25-model_01-model_states.pt.
+[2025-01-29 15:32:02,430] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_36-model_00-model_states.pt...
+[2025-01-29 15:32:02,448] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_07-model_01-model_states.pt...
+[2025-01-29 15:32:02,540] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_07-model_00-model_states.pt.
+[2025-01-29 15:32:02,629] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_07-model_01-model_states.pt.
+[2025-01-29 15:32:02,674] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_36-model_00-model_states.pt.
+[2025-01-29 15:32:02,674] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_06_model_states.pt...
+[2025-01-29 15:32:02,676] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_06_model_states.pt.
+[2025-01-29 15:32:02,677] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_06_optim_states.pt...
+[2025-01-29 15:32:02,677] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_06_optim_states.pt...
+[2025-01-29 15:32:02,839] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_17-model_00-model_states.pt...
+[2025-01-29 15:32:02,926] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_17-model_00-model_states.pt.
+[2025-01-29 15:32:02,940] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_17-model_01-model_states.pt...
+[2025-01-29 15:32:02,957] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_26-model_00-model_states.pt...
+[2025-01-29 15:32:02,964] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_26-model_01-model_states.pt...
+[2025-01-29 15:32:03,043] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_26-model_00-model_states.pt.
+[2025-01-29 15:32:03,051] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_26-model_01-model_states.pt.
+[2025-01-29 15:32:03,053] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_17-model_01-model_states.pt.
+[2025-01-29 15:32:03,070] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_08-model_00-model_states.pt...
+[2025-01-29 15:32:03,158] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_08-model_00-model_states.pt.
+[2025-01-29 15:32:03,165] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_08-model_01-model_states.pt...
+[2025-01-29 15:32:03,252] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_08-model_01-model_states.pt.
+[2025-01-29 15:32:03,464] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_18-model_00-model_states.pt...
+[2025-01-29 15:32:03,551] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_18-model_00-model_states.pt.
+[2025-01-29 15:32:03,552] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_02_model_states.pt...
+[2025-01-29 15:32:03,554] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_02_model_states.pt.
+[2025-01-29 15:32:03,555] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_02_optim_states.pt...
+[2025-01-29 15:32:03,555] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_02_optim_states.pt...
+[2025-01-29 15:32:03,580] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_27-model_00-model_states.pt...
+[2025-01-29 15:32:03,586] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_18-model_01-model_states.pt...
+[2025-01-29 15:32:03,587] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_27-model_01-model_states.pt...
+[2025-01-29 15:32:03,684] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_27-model_00-model_states.pt.
+[2025-01-29 15:32:03,684] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_04_model_states.pt...
+[2025-01-29 15:32:03,686] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_04_model_states.pt.
+[2025-01-29 15:32:03,687] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_04_optim_states.pt...
+[2025-01-29 15:32:03,687] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_04_optim_states.pt...
+[2025-01-29 15:32:03,691] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_27-model_01-model_states.pt.
+[2025-01-29 15:32:03,692] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_05_model_states.pt...
+[2025-01-29 15:32:03,694] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_05_model_states.pt.
+[2025-01-29 15:32:03,694] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_05_optim_states.pt...
+[2025-01-29 15:32:03,694] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_05_optim_states.pt...
+[2025-01-29 15:32:03,700] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_09-model_00-model_states.pt...
+[2025-01-29 15:32:03,786] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_09-model_01-model_states.pt...
+[2025-01-29 15:32:03,788] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_09-model_00-model_states.pt.
+[2025-01-29 15:32:03,788] [INFO] [logging.py:96:log_dist] [Rank 0] Saving model checkpoint: /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_00_model_states.pt
+[2025-01-29 15:32:03,788] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_00_model_states.pt...
+[2025-01-29 15:32:03,790] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_18-model_01-model_states.pt.
+[2025-01-29 15:32:03,791] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_03_model_states.pt...
+[2025-01-29 15:32:03,792] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_00_model_states.pt.
+[2025-01-29 15:32:03,793] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[2025-01-29 15:32:03,793] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_00_optim_states.pt...
+[2025-01-29 15:32:03,819] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_03_model_states.pt.
+[2025-01-29 15:32:03,820] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_03_optim_states.pt...
+[2025-01-29 15:32:03,819] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_03_optim_states.pt...
+[2025-01-29 15:32:03,887] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/layer_09-model_01-model_states.pt.
+[2025-01-29 15:32:03,888] [INFO] [logging.py:96:log_dist] [Rank 1] Saving model checkpoint: /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_01_model_states.pt
+[2025-01-29 15:32:03,888] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_01_model_states.pt...
+[2025-01-29 15:32:03,891] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/mp_rank_01_model_states.pt.
+[2025-01-29 15:32:03,892] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_01_optim_states.pt...
+[2025-01-29 15:32:03,892] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_01_optim_states.pt...
+[2025-01-29 15:32:15,429] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_07_optim_states.pt.
+[2025-01-29 15:32:15,429] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_07_optim_states.pt
+[2025-01-29 15:32:15,429] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:15,467] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_07_optim_states.pt.
+[2025-01-29 15:32:15,468] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_07_optim_states.pt
+[2025-01-29 15:32:15,468] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:15,687] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_06_optim_states.pt.
+[2025-01-29 15:32:15,688] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_06_optim_states.pt
+[2025-01-29 15:32:15,688] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:15,883] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_06_optim_states.pt.
+[2025-01-29 15:32:15,883] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_06_optim_states.pt
+[2025-01-29 15:32:15,883] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,092] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_04_optim_states.pt.
+[2025-01-29 15:32:20,092] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_04_optim_states.pt
+[2025-01-29 15:32:20,092] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,272] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_02_optim_states.pt.
+[2025-01-29 15:32:20,272] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_02_optim_states.pt
+[2025-01-29 15:32:20,272] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,325] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_02_optim_states.pt.
+[2025-01-29 15:32:20,326] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_02_optim_states.pt
+[2025-01-29 15:32:20,326] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,382] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_04_optim_states.pt.
+[2025-01-29 15:32:20,382] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_04_optim_states.pt
+[2025-01-29 15:32:20,382] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,411] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_03_optim_states.pt.
+[2025-01-29 15:32:20,411] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_03_optim_states.pt
+[2025-01-29 15:32:20,411] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,493] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_03_optim_states.pt.
+[2025-01-29 15:32:20,493] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_03_optim_states.pt
+[2025-01-29 15:32:20,493] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,588] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_00_optim_states.pt.
+[2025-01-29 15:32:20,588] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_00_optim_states.pt
+[2025-01-29 15:32:20,588] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,859] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_01_optim_states.pt.
+[2025-01-29 15:32:20,859] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_01_optim_states.pt
+[2025-01-29 15:32:20,859] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:20,906] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[2025-01-29 15:32:20,912] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_00_optim_states.pt
+[2025-01-29 15:32:20,912] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:21,004] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_05_optim_states.pt.
+[2025-01-29 15:32:21,004] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_1_mp_rank_05_optim_states.pt
+[2025-01-29 15:32:21,005] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:21,113] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_01_optim_states.pt.
+[2025-01-29 15:32:21,113] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_01_optim_states.pt
+[2025-01-29 15:32:21,113] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[2025-01-29 15:32:21,167] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_05_optim_states.pt.
+[2025-01-29 15:32:21,167] [INFO] [engine.py:3426:_save_zero_checkpoint] zero checkpoint saved /work/08775/byz2022/vista/gpt-neox_20241210/gpt-neox/checkpoints_test/global_step8/zero_pp_rank_0_mp_rank_05_optim_states.pt
+[2025-01-29 15:32:21,168] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step8 is ready now!
+[rank6]:[W129 15:32:21.375441585 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank2]:[W129 15:32:21.557264410 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank5]:[W129 15:32:21.592331956 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank7]:[W129 15:32:21.399366206 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank1]:[W129 15:32:21.102476459 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank8]:[W129 15:32:21.993673686 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank3]:[W129 15:32:21.672275944 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank11]:[W129 15:32:21.732942566 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank9]:[W129 15:32:21.533454598 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank10]:[W129 15:32:21.829117266 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+[rank0]:[W129 15:32:22.370890138 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+[rank4]:[W129 15:32:22.218921528 ProcessGroupNCCL.cpp:1488] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present, but this warning has only been added since PyTorch 2.4 (function operator())
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd
+slurmstepd: error: _get_joules_task: can't get info from slurmd

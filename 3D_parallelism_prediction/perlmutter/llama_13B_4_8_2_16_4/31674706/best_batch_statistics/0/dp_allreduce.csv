@@ -1,0 +1,85 @@
+cpu_op_0,cpu_op_0_id,cpu_op_0_input_dim,cpu_op_1,cpu_op_1_id,cpu_op_1_input_dim,kernel,kernel_id,kernel_overhead(us),kernel_dur(us)
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::flatten_dense_tensors,143974,[[]],"void at::native::(anonymous namespace)::CatArrayBatchedCopy<c10::Half, unsigned int, 1, 128, 1>(c10::Half*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<c10::Half, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",843732,0,1668.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1442): allreduce_bucket,0,,"void at::native::vectorized_elementwise_kernel<4, at::native::BUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, at::detail::Array<char*, 2> >(int, at::native::BUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, at::detail::Array<char*, 2>)",843737,0.6666666666666666,1222.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,torch/distributed/distributed_c10d.py(1472): all_reduce,0,,"ncclKernel_AllReduce_RING_LL_Sum_half(ncclDevComm*, unsigned long, ncclWork*)",843755,1.0,700330.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::unflatten_dense_tensors,144062,"[[426163200], []]",Memcpy DtoD (Device -> Device),843791,0.6666666666666666,104.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843797,0.3333333333333333,33.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,151043,"[[6400, 5120], [6400, 5120], []]",Memcpy DtoD (Device -> Device),843803,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843809,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,151044,"[[1920, 5120], [1920, 5120], []]",Memcpy DtoD (Device -> Device),843815,0.3333333333333333,45.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,151045,"[[5120, 640], [5120, 640], []]",Memcpy DtoD (Device -> Device),843821,0.6666666666666666,33.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843827,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843833,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843839,0.6666666666666666,45.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843845,0.3333333333333333,33.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843851,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843857,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843863,0.6666666666666666,45.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843869,0.6666666666666666,33.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843875,0.3333333333333333,15.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843881,0.3333333333333333,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843887,0.6666666666666666,45.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843893,0.3333333333333333,33.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843899,0.6666666666666666,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843905,0.3333333333333333,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843911,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843917,0.6666666666666666,33.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843923,0.6666666666666666,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843929,0.3333333333333333,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843935,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843941,0.6666666666666666,33.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843947,0.6666666666666666,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843953,0.3333333333333333,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843959,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843965,0.3333333333333333,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843971,0.6666666666666666,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843977,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843983,0.3333333333333333,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843989,0.6666666666666666,35.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),843995,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844001,0.3333333333333333,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844007,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844013,0.3333333333333333,35.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844019,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844025,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844031,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844037,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844043,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844049,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844055,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844061,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844067,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844073,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844079,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844085,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844091,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844097,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844103,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844109,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844115,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844121,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844127,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844133,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844139,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844145,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844151,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844157,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844163,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844169,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844175,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844181,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844187,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844193,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844199,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844205,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844211,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844217,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844223,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844229,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844235,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844241,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844247,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844253,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844259,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844265,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),844271,0.3333333333333333,3.0

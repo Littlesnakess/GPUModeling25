@@ -1,0 +1,12 @@
+module,function,gpu_runtime(us)
+encoder_fwd,deepspeed/runtime/activation_checkpointing/checkpointing.py(496): forward,"[12788.881818181819, 12101.257291666667, 11940.37361111111]"
+encoder_bwd,CheckpointFunctionBackward,"[34623.792045454546, 34659.214583333334, 35987.4625]"
+train_batch,deepspeed/runtime/pipe/engine.py(312): train_batch,"[17427065.8, 17433200.0, 17434098.8]"
+pp_p2p,deepspeed/runtime/pipe/engine.py(948): _exec_send_activations,"[10783.25, 10473.475, 0]"
+mp_allreduce,_ReduceFromModelParallelRegion,"[1036.4440217391304, 763.828125, 799.8993055555555]"
+dp_allreduce,deepspeed/runtime/pipe/engine.py(270): _exec_reduce_grads,"[3998785.4, 4167965.0, 3285912.4]"
+dp_allgather,deepspeed/runtime/utils.py(940): all_gather_all_partitions,"[1939422.4, 2029402.4, 1558095.6]"
+stage_fwd,deepspeed/runtime/pipe/module.py(319): forward,"[141511.1125, 144764.6375, 112320.6875]"
+stage_bwd,deepspeed/runtime/pipe/engine.py(710): _exec_backward_pass,"[385176.7875, 418416.9375, 325581.725]"
+optimizer,deepspeed/runtime/pipe/engine.py(1140): _exec_optimizer_step,"[14547.2, 15686.2, 11629.4]"
+update,optimizer+dp_allgather,"[1953969.5999999999, 2045088.5999999999, 1569725.0]"

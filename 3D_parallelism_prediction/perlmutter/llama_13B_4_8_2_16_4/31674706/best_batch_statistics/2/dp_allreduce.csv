@@ -1,0 +1,70 @@
+cpu_op_0,cpu_op_0_id,cpu_op_0_input_dim,cpu_op_1,cpu_op_1_id,cpu_op_1_input_dim,kernel,kernel_id,kernel_overhead(us),kernel_dur(us)
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::cat,117102,"[[], []]","void at::native::(anonymous namespace)::CatArrayBatchedCopy<c10::Half, unsigned int, 1, 128, 1>(c10::Half*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<c10::Half, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",698270,0,1424.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1442): allreduce_bucket,0,,"void at::native::vectorized_elementwise_kernel<4, at::native::BUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, at::detail::Array<char*, 2> >(int, at::native::BUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, at::detail::Array<char*, 2>)",698275,0.3333333333333333,997.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,record_param_comms,117105,,"ncclKernel_AllReduce_RING_LL_Sum_half(ncclDevComm*, unsigned long, ncclWork*)",698293,1.0,1440249.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in function unflatten_dense_tensors>,0,,Memcpy DtoD (Device -> Device),698329,0.3333333333333333,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123005,"[[1920, 5120], [1920, 5120], []]",Memcpy DtoD (Device -> Device),698335,0.6666666666666666,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123005,"[[1920, 5120], [1920, 5120], []]",Memcpy DtoD (Device -> Device),698341,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698347,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123006,"[[5120, 640], [5120, 640], []]",Memcpy DtoD (Device -> Device),698353,0.3333333333333333,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698359,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123008,"[[5120, 2560], [5120, 2560], []]",Memcpy DtoD (Device -> Device),698365,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698371,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698377,0.6666666666666666,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698383,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698389,0.3333333333333333,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123013,"[[1920, 5120], [1920, 5120], []]",Memcpy DtoD (Device -> Device),698395,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123014,"[[5120, 640], [5120, 640], []]",Memcpy DtoD (Device -> Device),698401,0.6666666666666666,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123015,"[[2560, 5120], [2560, 5120], []]",Memcpy DtoD (Device -> Device),698407,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123016,"[[5120, 2560], [5120, 2560], []]",Memcpy DtoD (Device -> Device),698413,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123017,"[[1920, 5120], [1920, 5120], []]",Memcpy DtoD (Device -> Device),698419,0.6666666666666666,43.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123018,"[[5120, 640], [5120, 640], []]",Memcpy DtoD (Device -> Device),698425,0.6666666666666666,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698431,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698437,0.3333333333333333,45.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698443,0.6666666666666666,42.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698449,0.6666666666666666,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698455,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698461,0.6666666666666666,44.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698467,1.0,42.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698473,0.3333333333333333,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698479,0.6666666666666666,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698485,0.3333333333333333,45.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698491,0.6666666666666666,42.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698497,0.6666666666666666,34.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698503,0.3333333333333333,14.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698509,0.6666666666666666,45.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698515,0.3333333333333333,42.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698521,0.6666666666666666,104.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698527,0.3333333333333333,4.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123036,"[[5120, 2560], [5120, 2560], []]",Memcpy DtoD (Device -> Device),698533,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123037,"[[6400, 5120], [6400, 5120], []]",Memcpy DtoD (Device -> Device),698539,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,aten::copy_,123038,"[[5120], [5120], []]",Memcpy DtoD (Device -> Device),698545,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698551,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698557,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698563,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698569,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698575,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698581,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698587,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698593,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698599,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698605,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698611,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698617,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698623,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,<built-in method copy_ of Tensor object at 0x7fa84d854810>,0,,Memcpy DtoD (Device -> Device),698629,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698635,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698641,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698647,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698653,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698659,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698665,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698671,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698677,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698683,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698689,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698695,0.3333333333333333,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698701,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698707,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698713,0.6666666666666666,3.0
+deepspeed/utils/nvtx.py(13): wrapped_fn,0,,deepspeed/runtime/zero/stage_1_and_2.py(1481): allreduce_and_copy,0,,Memcpy DtoD (Device -> Device),698719,0.3333333333333333,3.0

@@ -1,0 +1,7 @@
+module,function,gpu_runtime(us)
+encoder_fwd,deepspeed/runtime/activation_checkpointing/checkpointing.py(496): forward,"[11983.861598295476, 9558.487701145828, 7952.473417361086]"
+encoder_bwd,CheckpointFunctionBackward,"[22351.866811477248, 22223.25122322916, 22835.326000138844]"
+update,deepspeed/runtime/pipe/engine.py(312): train_batch,"[8622589.988880001, 8627743.615980001, 8622620.290020004]"
+encoder_fwd,deepspeed/runtime/activation_checkpointing/checkpointing.py(496): forward,"[11983.861598295478, 9558.48770114582, 7952.473417361078]"
+encoder_bwd,CheckpointFunctionBackward,"[22351.866811477346, 22223.251223229214, 22835.3260001389]"
+update,deepspeed/runtime/pipe/engine.py(312): train_batch,"[8622589.988880003, 8627743.61598, 8622620.29002]"

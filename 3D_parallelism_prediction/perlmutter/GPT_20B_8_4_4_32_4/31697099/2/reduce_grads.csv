@@ -1,0 +1,43 @@
+cpu_op_0,cpu_op_0_id,cpu_op_0_input_dim,cpu_op_1,cpu_op_1_id,cpu_op_1_input_dim,kernel,kernel_id,kernel_overhead(us),kernel_dur(us)
+aten::flatten_dense_tensors,192772,[[]],aten::cat,192812,"[[], []]","void at::native::(anonymous namespace)::CatArrayBatchedCopy<c10::Half, unsigned int, 1, 128, 1>(c10::Half*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<c10::Half, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",638287,0,1752.6
+None,None,None,None,None,None,"void at::native::vectorized_elementwise_kernel<4, at::native::BUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, at::detail::Array<char*, 2> >(int, at::native::BUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, at::detail::Array<char*, 2>)",638292,2.6666666666666665,967.8
+c10d::allreduce_,192814,"[[], [], [], []]",nccl:all_reduce,192816,[[417750528]],"ncclKernel_AllReduce_RING_LL_Sum_half(ncclDevComm*, unsigned long, ncclWork*)",638310,3.6666666666666665,1031461.0
+aten::copy_,192975,"[[4608, 6144], [4608, 6144], []]",aten::copy_,192975,"[[4608, 6144], [4608, 6144], []]",Memcpy DtoD (Device -> Device),638346,3.3333333333333335,72.4
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638352,2.6666666666666665,27.2
+aten::copy_,192977,"[[6144, 6144], [6144, 6144], []]",aten::copy_,192977,"[[6144, 6144], [6144, 6144], []]",Memcpy DtoD (Device -> Device),638358,2.3333333333333335,94.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638364,3.3333333333333335,94.0
+aten::copy_,192979,"[[4608, 6144], [4608, 6144], []]",aten::copy_,192979,"[[4608, 6144], [4608, 6144], []]",Memcpy DtoD (Device -> Device),638370,3.3333333333333335,71.8
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638376,1.6666666666666667,27.4
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638382,3.3333333333333335,94.2
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638388,2.0,95.2
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638394,3.0,72.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638400,2.3333333333333335,28.2
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638406,3.3333333333333335,98.4
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638412,2.3333333333333335,100.2
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638418,2.3333333333333335,204.4
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638424,3.6666666666666665,3.2
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638430,2.6666666666666665,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638436,3.3333333333333335,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638442,2.3333333333333335,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638448,3.0,3.0
+aten::copy_,192993,"[[6144], [6144], []]",aten::copy_,192993,"[[6144], [6144], []]",Memcpy DtoD (Device -> Device),638454,2.6666666666666665,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638460,2.3333333333333335,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638466,3.0,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638472,2.6666666666666665,3.0
+aten::copy_,192997,"[[6144], [6144], []]",aten::copy_,192997,"[[6144], [6144], []]",Memcpy DtoD (Device -> Device),638478,3.0,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638484,2.6666666666666665,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638490,2.6666666666666665,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638496,3.0,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638502,2.3333333333333335,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638508,3.0,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638514,2.6666666666666665,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638520,3.0,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638526,2.6666666666666665,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638532,3.0,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638538,2.3333333333333335,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638544,2.6666666666666665,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638550,3.0,3.0
+aten::copy_,193010,"[[6144], [6144], []]",aten::copy_,193010,"[[6144], [6144], []]",Memcpy DtoD (Device -> Device),638556,2.6666666666666665,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638562,2.3333333333333335,3.0
+None,None,None,None,None,None,Memcpy DtoD (Device -> Device),638568,3.3333333333333335,3.0
+aten::copy_,193013,"[[6144], [6144], []]",aten::copy_,193013,"[[6144], [6144], []]",Memcpy DtoD (Device -> Device),638574,2.3333333333333335,3.0
