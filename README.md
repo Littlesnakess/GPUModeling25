@@ -26,7 +26,7 @@ Profiling files can be download at https://doi.org/10.5281/zenodo.15288792 and s
 
 
 ## Overall Decoding
-The functional scrpit is vista_parallel_timeline_decoder_new.py. 
+The functional scrpit is **`vista_parallel_timeline_decoder_new.py`**. 
 
 ```bash
 cd GPUModeling25/3D_parallelism_prediction  # Predictor folder
@@ -39,8 +39,8 @@ python vista_parallel_timeline_decoder_new.py \
 ./run_decoder.sh
 ```
 
-## Best loop Decoding
-The functional scrpit is get_the_best_batch.py. 
+## Best Loop Decoding
+Best loop means the fastest iteration of onece parameter update. The functional scrpit is **`get_the_best_batch.py`**. 
 
 ```bash
 cd GPUModeling25/3D_parallelism_prediction  # Predictor folder
