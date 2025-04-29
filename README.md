@@ -12,7 +12,7 @@ To install the ing basic dependencies, run:
 
 ```bash
 cd GPUModeling25  # repository root
-pip install -r requirements/requirements.txt
+pip install -r requirements.txt
 ```
 
 from the repository root.
