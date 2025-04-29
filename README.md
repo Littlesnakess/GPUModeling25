@@ -122,7 +122,7 @@ cd GPUModeling25/3D_parallelism_prediction  # Predictor folder
 # Generate operation level predictions in the folder of profiling files
 python component_portion_percentage.py
 ```
-This will create a .png figure in folder **`statistics`**.
+This will create a .png figure in folder **`bar_charts`**.
 
 
 # Others
